@@ -11,7 +11,7 @@ const { USER_AGENT } = require('../constants.js')
 const safeDownload = async (url, binary = false) => {
   try {
     const resp = await fetch(url, { headers: { 'User-Agent': USER_AGENT } })
-    const body = binary ? await resp.blob() : await resp.json()
+    const body = binary ? await resp.buffer() : await resp.json()
 
     if (resp.status !== 200) throw new Error('Status not 200')
     else return { error: undefined, body }
