@@ -102,13 +102,23 @@ const downloadMod = async (mod, platform, installDir) => {
 
 /**
  * @param {string} hash Hash Search String
+ * @param {string} [path] Optional Path
  * @returns {Promise.<Mod[]>}
  */
-const fetchByHash = async hash => {
-  const resp = await fetch(`${API_URL}/mods/by-hash/${hash}`, { headers: { 'User-Agent': USER_AGENT } })
-  const body = await resp.json()
+const fetchByHash = async (hash, path) => {
+  const params = { headers: { 'User-Agent': USER_AGENT } }
 
-  return body
+  // Set path if given
+  if (path) {
+    const body = new URLSearchParams()
+    body.set('path', path)
+
+    params.body = body
+    params.method = 'POST'
+  }
+
+  const resp = await fetch(`${API_URL}/mods/by-hash/${hash}`, params)
+  return resp.json()
 }
 
 module.exports = { fetchMods, fetchGameVersions, downloadMod, fetchByHash }
