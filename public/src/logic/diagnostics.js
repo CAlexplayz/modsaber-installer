@@ -48,16 +48,18 @@ const normaliseDir = dir => `${dir.replace(/\\/g, '/')}/`
 
 /**
  * @param {string} dir Directory to list
+ * @param {string} install Install Directory
  * @param {Object} [options] Options
  * @param {boolean} [options.recursive] Search recursively
  * @param {string[]} [options.filter] File Name Whitelist
  * @param {boolean} [options.hashes] Include hashes
  */
-const getFiles = async (dir, options = {}) => {
+const getFiles = async (dir, install, options = {}) => {
   const recursive = options.recursive !== undefined ? options.recursive : true
   const hashes = options.hashes !== undefined ? options.hashes : true
 
   const normalisedDir = normaliseDir(dir)
+  const normalisedBase = normaliseDir(install)
   const globPath = recursive ? path.join(dir, '**', '*.*') : path.join(dir, '*.*')
   const files = await fse.glob(globPath)
 
@@ -79,7 +81,8 @@ const getFiles = async (dir, options = {}) => {
     const normalised = file.replace(normalisedDir, '')
     if (hash === null) return { file: normalised, hash, modInfo: undefined }
 
-    const mods = await fetchByHash(hash)
+    const filePath = file.replace(normalisedBase, '')
+    const mods = await fetchByHash(hash, filePath)
     if (mods.length === 0) return { file: normalised, hash, modInfo: undefined }
     const [mod] = mods
 
@@ -208,13 +211,13 @@ const generate = async dir => {
     { tree: rootFiles, mods: rootFilesMods },
     logFiles,
   ] = await Promise.all([
-    getFiles(path.join(dir, 'Plugins')),
-    getFiles(path.join(dir, 'Beat Saber_Data', 'Managed'), { filter: managedFilter }),
-    getFiles(path.join(dir, 'Beat Saber_Data', 'Plugins')),
-    getFiles(path.join(dir, 'CustomAvatars')),
-    getFiles(path.join(dir, 'CustomPlatforms')),
-    getFiles(path.join(dir, 'CustomSabers')),
-    getFiles(dir, { recursive: false }),
+    getFiles(path.join(dir, 'Plugins'), dir),
+    getFiles(path.join(dir, 'Beat Saber_Data', 'Managed'), dir, { filter: managedFilter }),
+    getFiles(path.join(dir, 'Beat Saber_Data', 'Plugins'), dir),
+    getFiles(path.join(dir, 'CustomAvatars'), dir),
+    getFiles(path.join(dir, 'CustomPlatforms'), dir),
+    getFiles(path.join(dir, 'CustomSabers'), dir),
+    getFiles(dir, dir, { recursive: false }),
     getLogFiles(dir),
   ])
 
