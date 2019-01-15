@@ -88,7 +88,8 @@ const getFiles = async (dir, install, options = {}) => {
 
     const flags = []
     if (mods.length > 1) flags.push('Multiple')
-    if (mod.approval.status === true) flags.push('Approved')
+    if (mod.approval.status === 'approved') flags.push('Approved')
+    else if (mod.approval.status === 'pending') flags.push('Pending Approval')
     else flags.push('Not Approved')
     flags.push(mod.gameVersion.value)
 

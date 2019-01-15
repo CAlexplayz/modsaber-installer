@@ -19,7 +19,7 @@ const { API_URL, USER_AGENT, BLOCKED_EXTENSIONS } = require('../constants.js')
  * @property {Files} files.steam
  * @property {Files} files.oculus
  * @property {Object} approval
- * @property {boolean} approval.status
+ * @property {('pending'|'approved'|'denied')} approval.status
  * @property {string} approval.modified
  * @property {Object} gameVersion
  * @property {string} gameVersion.value
