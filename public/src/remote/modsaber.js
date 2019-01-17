@@ -28,23 +28,63 @@ const { API_URL, USER_AGENT, BLOCKED_EXTENSIONS } = require('../constants.js')
 
 /**
  * @param {('latest'|'all'|'newest-by-gameversion')} options Mod Fetch Options
+ * @param {boolean} [series] Run in series, defaults to `false`
  * @returns {Promise.<Mod[]>}
  */
-const fetchMods = async options => {
+const fetchMods = async (options, series = false) => {
   const type = options || 'latest'
 
   const pageResp = await fetch(`${API_URL}/mods/approved/${type}`, { headers: { 'User-Agent': USER_AGENT } })
   const { lastPage } = await pageResp.json()
   const pages = Array.from(new Array(lastPage + 1)).map((_, i) => i)
 
-  const multi = await Promise.all(pages.map(async page => {
+  /**
+   * @param {number} page Page Number
+   * @returns {Promise.<Mod[]>}
+   */
+  const fetchPage = async page => {
     const modResp = await fetch(`${API_URL}/mods/approved/${type}/${page}`, { headers: { 'User-Agent': USER_AGENT } })
     const { mods } = await modResp.json()
 
     return mods
-  }))
+  }
 
-  return [].concat(...multi)
+  if (series) {
+    // Run in series
+    log.debug('Loading mods in series...')
+
+    const results = []
+    for (const page of pages) {
+      const resp = await fetchPage(page) // eslint-disable-line
+      results.push(resp)
+    }
+
+    return [].concat(...results)
+  } else {
+    // Run in parallel
+    log.debug('Loading mods in parallel...')
+
+    const results = await Promise.all(pages.map(fetchPage))
+    return [].concat(...results)
+  }
+}
+
+/**
+ * @param {('latest'|'all'|'newest-by-gameversion')} options Mod Fetch Options
+ * @returns {Promise.<Mod[]>}
+ */
+const fetchModsSafer = async options => {
+  try {
+    const mods = await fetchMods(options)
+    return mods
+  } catch (err) {
+    const { inspect } = require('util')
+    log.debug('fetchModsSafer() Error', inspect(err), JSON.stringify(err))
+    if (err.code !== 'ETIMEDOUT') throw err
+
+    const mods = await fetchMods(options, true)
+    return mods
+  }
 }
 
 /**
@@ -121,4 +161,4 @@ const fetchByHash = async (hash, path) => {
   return resp.json()
 }
 
-module.exports = { fetchMods, fetchGameVersions, downloadMod, fetchByHash }
+module.exports = { fetchMods, fetchModsSafer, fetchGameVersions, downloadMod, fetchByHash }
