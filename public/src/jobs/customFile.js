@@ -79,7 +79,7 @@ const getData = async (input, remote) => {
   if (!remote) return fse.readFile(input)
 
   const resp = await fetch(input, { headers: { 'User-Agent': USER_AGENT } })
-  const body = await resp.json()
+  const body = await resp.buffer()
 
   return body
 }
