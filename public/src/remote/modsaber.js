@@ -1,5 +1,7 @@
 const log = require('electron-log')
 const fetch = require('node-fetch')
+const branchy = require('branchy')
+const chunk = require('chunk')
 const { extractZip, safeDownload } = require('./remote.js')
 const { calculateHash } = require('../utils/helpers.js')
 const { API_URL, USER_AGENT, BLOCKED_EXTENSIONS } = require('../constants.js')
@@ -28,63 +30,43 @@ const { API_URL, USER_AGENT, BLOCKED_EXTENSIONS } = require('../constants.js')
 
 /**
  * @param {('latest'|'all'|'newest-by-gameversion')} options Mod Fetch Options
- * @param {boolean} [series] Run in series, defaults to `false`
  * @returns {Promise.<Mod[]>}
  */
-const fetchMods = async (options, series = false) => {
+const fetchMods = async options => {
   const type = options || 'latest'
 
   const pageResp = await fetch(`${API_URL}/mods/approved/${type}`, { headers: { 'User-Agent': USER_AGENT } })
   const { lastPage } = await pageResp.json()
   const pages = Array.from(new Array(lastPage + 1)).map((_, i) => i)
+  const pageJobs = chunk(pages, 5)
 
   /**
-   * @param {number} page Page Number
+   * @param {number[]} pageIDs Page IDs
+   * @param {Object} t Tunnelled Info
+   * @param {string} t.type Type
+   * @param {string} t.API_URL API URL
+   * @param {string} t.USER_AGENT User Agent
    * @returns {Promise.<Mod[]>}
    */
-  const fetchPage = async page => {
-    const modResp = await fetch(`${API_URL}/mods/approved/${type}/${page}`, { headers: { 'User-Agent': USER_AGENT } })
-    const { mods } = await modResp.json()
+  const fetchPageBulk = async (pageIDs, t) => {
+    const localFetch = require('node-fetch')
+    const jobs = pageIDs.map(async page => {
+      const modResp = await localFetch(`${t.API_URL}/mods/approved/${t.type}/${page}`, { headers: { 'User-Agent': t.USER_AGENT } })
+      const { mods } = await modResp.json()
+      return mods
+    })
 
-    return mods
+    const allMods = await Promise.all(jobs)
+    return [].concat(...allMods)
   }
 
-  if (series) {
-    // Run in series
-    log.debug('Loading mods in series...')
+  /**
+   * @type {function (number[]): Promise.<Mod[]>}
+   */
+  const fetchPageThreaded = branchy(fetchPageBulk)
 
-    const results = []
-    for (const page of pages) {
-      const resp = await fetchPage(page) // eslint-disable-line
-      results.push(resp)
-    }
-
-    return [].concat(...results)
-  } else {
-    // Run in parallel
-    log.debug('Loading mods in parallel...')
-
-    const results = await Promise.all(pages.map(fetchPage))
-    return [].concat(...results)
-  }
-}
-
-/**
- * @param {('latest'|'all'|'newest-by-gameversion')} options Mod Fetch Options
- * @returns {Promise.<Mod[]>}
- */
-const fetchModsSafer = async options => {
-  try {
-    const mods = await fetchMods(options)
-    return mods
-  } catch (err) {
-    const { inspect } = require('util')
-    log.debug('fetchModsSafer() Error', inspect(err), JSON.stringify(err))
-    if (err.code !== 'ETIMEDOUT') throw err
-
-    const mods = await fetchMods(options, true)
-    return mods
-  }
+  const multi = await Promise.all(pageJobs.map(page => fetchPageThreaded(page, { type, API_URL, USER_AGENT })))
+  return [].concat(...multi)
 }
 
 /**
@@ -161,4 +143,4 @@ const fetchByHash = async (hash, path) => {
   return resp.json()
 }
 
-module.exports = { fetchMods, fetchModsSafer, fetchGameVersions, downloadMod, fetchByHash }
+module.exports = { fetchMods, fetchGameVersions, downloadMod, fetchByHash }
