@@ -38,7 +38,7 @@ const handleCustomFile = async (input, remote = false) => {
   } else {
     // Validate file is trustworthy
     const { hostname } = parseURL(input)
-    if (hostname !== 'modelsaber.assistant.moe') {
+    if (hostname !== 'modelsaber.com') {
       throw new CustomFileError(ERRORS.CUSTOM_FILE_UNTRUSTED)
     }
   }
