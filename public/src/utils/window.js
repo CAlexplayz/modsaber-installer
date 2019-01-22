@@ -16,7 +16,11 @@ const getAttention = window => {
  * @returns {{ window: BrowserWindow, sender: Electron.WebContents }}
  */
 const getActiveWindow = win => {
-  const window = win || BrowserWindow.getAllWindows()[0]
+  const [fallback] = BrowserWindow
+    .getAllWindows()
+    .filter(x => x.custom.ROLE === 'WINDOW_MAIN')
+
+  const window = win || fallback
   const sender = window.webContents
 
   return { window, sender }

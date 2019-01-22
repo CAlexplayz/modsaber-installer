@@ -12,6 +12,7 @@ import * as c from './constants.js'
 const electron = window.require('electron')
 const { ipcRenderer } = electron
 const { dialog, getCurrentWindow } = electron.remote
+const loading = getCurrentWindow().custom.ROLE === 'WINDOW_LOADING'
 
 const Store = window.require('electron-store')
 const store = new Store()
@@ -101,11 +102,15 @@ export class ControllerProvider extends Component {
   }
 
   componentDidMount () {
+    if (loading) return undefined
+
     ipcRenderer.send('get-path')
     ipcRenderer.send('get-remote')
 
     this.setState({ statusText: c.STATUS_TEXT_LOADING })
     this.setTheme(this.state.theme)
+
+    return undefined
   }
 
   setStateAsync (state) {

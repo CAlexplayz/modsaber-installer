@@ -24,7 +24,29 @@ autoUpdater.autoDownload = false
  */
 let window
 
+/**
+ * @type {BrowserWindow}
+ */
+let loadingWindow
+
 app.on('ready', () => {
+  loadingWindow = new BrowserWindow({
+    width: 290,
+    height: 320,
+    resizable: false,
+    frame: false,
+    show: false,
+    icon: path.join(__dirname, 'icon.png'),
+  })
+
+  const loadingURL = isDev ?
+    'http://localhost:3000' :
+    `file://${path.join(__dirname, '../build/index.html')}`
+  loadingWindow.loadURL(loadingURL)
+
+  loadingWindow.custom = { ROLE: 'WINDOW_LOADING' }
+  loadingWindow.once('ready-to-show', () => loadingWindow.show())
+
   const updateCheck = async () => {
     if (isDev) return false
     else return (await autoUpdater.checkForUpdates()).cancellationToken !== undefined
@@ -67,6 +89,9 @@ app.on('ready', () => {
       autoUpdater.downloadUpdate()
     }
 
+    loadingWindow.destroy()
+    loadingWindow = undefined
+
     window.show()
     handleArgs(process.argv)
   })
@@ -75,7 +100,7 @@ app.on('ready', () => {
     window.flashFrame(false)
   })
 
-  window.custom = { BASE_URL, AUTO_UPDATE_JOB }
+  window.custom = { ROLE: 'WINDOW_MAIN', BASE_URL, AUTO_UPDATE_JOB }
 })
 
 app.on('second-instance', (event, argv) => {
