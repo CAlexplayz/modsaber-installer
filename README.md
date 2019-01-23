@@ -51,5 +51,5 @@ Actions that upload to hastebin will copy the resulting URL to your clipboard au
 ![Screenshot](https://b.catgirlsare.sexy/Lvds.png)
 
 ## Credits
-* Written by [lolPants](https://github.com/lolPants) with code from [Additional Contributers](https://github.com/lolPants/modsaber-installer/graphs/contributors)
+* Written by [lolPants](https://github.com/lolPants) with code from [Additional Contributors](https://github.com/lolPants/modsaber-installer/graphs/contributors)
 * Inspired by the original [Mod Manager](https://github.com/Umbranoxio/BeatSaberModInstaller) by [Umbranox](https://github.com/Umbranoxio)
