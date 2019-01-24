@@ -1,9 +1,9 @@
 const log = require('electron-log')
-const fetch = require('node-fetch')
+const { default: fetch } = require('node-fetch')
 const branchy = require('branchy')
 const chunk = require('chunk')
 const { extractZip, safeDownload } = require('./remote.js')
-const { calculateHash } = require('../utils/helpers.js')
+const { calculateHash, agent } = require('../utils/helpers.js')
 const { API_URL, USER_AGENT, BLOCKED_EXTENSIONS } = require('../constants.js')
 
 /**
@@ -35,7 +35,7 @@ const { API_URL, USER_AGENT, BLOCKED_EXTENSIONS } = require('../constants.js')
 const fetchMods = async options => {
   const type = options || 'latest'
 
-  const pageResp = await fetch(`${API_URL}/mods/approved/${type}`, { headers: { 'User-Agent': USER_AGENT } })
+  const pageResp = await fetch(`${API_URL}/mods/approved/${type}`, { headers: { 'User-Agent': USER_AGENT }, agent })
   const { lastPage } = await pageResp.json()
   const pages = Array.from(new Array(lastPage + 1)).map((_, i) => i)
   const pageJobs = chunk(pages, 5)
@@ -73,7 +73,7 @@ const fetchMods = async options => {
  * @returns {Promise.<{ id: string, value: string, manifest: string, selected: boolean }[]>}
  */
 const fetchGameVersions = async () => {
-  const resp = await fetch(`${API_URL}/site/gameversions`, { headers: { 'User-Agent': USER_AGENT } })
+  const resp = await fetch(`${API_URL}/site/gameversions`, { headers: { 'User-Agent': USER_AGENT }, agent })
   const body = await resp.json()
 
   return body
@@ -128,7 +128,7 @@ const downloadMod = async (mod, platform, installDir) => {
  * @returns {Promise.<Mod[]>}
  */
 const fetchByHash = async (hash, path) => {
-  const params = { headers: { 'User-Agent': USER_AGENT } }
+  const params = { headers: { 'User-Agent': USER_AGENT }, agent }
 
   // Set path if given
   if (path) {

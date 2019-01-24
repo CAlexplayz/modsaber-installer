@@ -1,10 +1,10 @@
 const path = require('path')
 const { parse: parseURL } = require('url')
-const fetch = require('node-fetch')
+const { default: fetch } = require('node-fetch')
 const fse = require('../utils/file.js')
 const { JobError } = require('./job.js')
 const { findPath } = require('../logic/pathFinder.js')
-const { calculateHash } = require('../utils/helpers.js')
+const { calculateHash, agent } = require('../utils/helpers.js')
 const { getActiveWindow } = require('../utils/window.js')
 const { USER_AGENT, CUSTOM_FILE_DIRS, ERRORS } = require('../constants.js')
 
@@ -78,7 +78,7 @@ const handleCustomFile = async (input, remote = false) => {
 const getData = async (input, remote) => {
   if (!remote) return fse.readFile(input)
 
-  const resp = await fetch(input, { headers: { 'User-Agent': USER_AGENT } })
+  const resp = await fetch(input, { headers: { 'User-Agent': USER_AGENT }, agent })
   const body = await resp.buffer()
 
   return body

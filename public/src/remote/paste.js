@@ -1,4 +1,5 @@
-const fetch = require('node-fetch')
+const { default: fetch } = require('node-fetch')
+const { agent } = require('../utils/helpers.js')
 const { USER_AGENT, HASTE_URL } = require('../constants.js')
 
 /**
@@ -12,6 +13,7 @@ const uploadPaste = async (body, ext) => {
     method: 'post',
     headers: { 'User-Agent': USER_AGENT },
     body,
+    agent,
   })
 
   const { key } = await resp.json()

@@ -1,4 +1,8 @@
 const crypto = require('crypto')
+const https = require('https')
+const agent = new https.Agent({
+  keepAlive: true,
+})
 
 /**
  * Calculate the SHA-1 Hash of a File Buffer
@@ -26,4 +30,4 @@ const promiseHandler = async promise => {
   }
 }
 
-module.exports = { calculateHash, promiseHandler }
+module.exports = { calculateHash, promiseHandler, agent }
