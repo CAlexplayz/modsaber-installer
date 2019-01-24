@@ -1,6 +1,6 @@
 const { BrowserWindow, ipcMain } = require('electron')
 const log = require('electron-log')
-const { fetchMods, fetchGameVersions } = require('../remote/modsaber.js')
+const { fetchModsSafer, fetchGameVersions } = require('../remote/modsaber.js')
 const { findSteam } = require('../logic/pathFinder.js')
 const { STEAM_APP_ID } = require('../constants.js')
 
@@ -10,7 +10,7 @@ ipcMain.on('get-remote', async ({ sender }) => {
 
   try {
     const [mods, gameVersions] = await Promise.all([
-      fetchMods('newest-by-gameversion'),
+      fetchModsSafer('newest-by-gameversion'),
       fetchGameVersions(),
     ])
 
