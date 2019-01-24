@@ -17,7 +17,7 @@ class Loading extends Component {
         height: '100%',
         '-webkit-app-region': 'drag',
       }}>
-        <img src={ Icon } style={{ width: '50%', height: 'auto' }} />
+        <img src={ Icon } style={{ width: '50%', height: 'auto' }} alt='ModSaber Logo' />
         <div style={{ textAlign: 'center' }}>
           <h1 className='is-size-4 has-text-weight-semibold'>ModSaber Installer</h1>
           <h3><i className='fas fa-cog fa-spin'></i> Loading...</h3>
