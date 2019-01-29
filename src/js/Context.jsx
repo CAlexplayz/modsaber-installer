@@ -279,6 +279,8 @@ export class ControllerProvider extends Component {
         error.link = link
 
         throw error
+      } else if (!search && type === 'conflicts') {
+        continue
       }
 
       // Push link
