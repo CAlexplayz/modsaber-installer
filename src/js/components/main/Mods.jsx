@@ -28,7 +28,8 @@ class Mods extends Component {
     }
 
     categories.sort((a, b) => {
-      const weight = b.weight - a.weight
+      const weight = (b.weight / b.mods.length) - (a.weight / a.mods.length)
+
       if (weight !== 0) return weight
       return a.name > b.name ? 1 : b.name > a.name ? -1 : 0
     })
