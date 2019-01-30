@@ -24,6 +24,8 @@
   top: 65px;
   margin-left: -25px;
   line-height: normal;
+
+  z-index: 1000;
 }
 
 .table thead div.header {
@@ -35,6 +37,8 @@
   background-color: white;
   width: calc(100% - 53px);
   border-bottom: 2px solid #dbdbdb;
+
+  z-index: 999;
 }
 
 .table tr {
@@ -79,4 +83,13 @@ div.separator {
   flex-grow: 1;
   height: 1px;
   background-color: rgba(50, 115, 220, 0.75);
+}
+
+i.collapse {
+  transform: translateY(1px);
+  transition: transform 0.15s ease-in-out;
+}
+
+i.collapse.collapsed {
+  transform: translateY(1px) rotate(-90deg);
 }

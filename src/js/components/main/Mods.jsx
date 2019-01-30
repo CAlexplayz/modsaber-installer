@@ -8,6 +8,17 @@ import '../../../css/scrollbar.css'
 import '../../../css/table.css'
 
 class Mods extends Component {
+  constructor (props) {
+    super(props)
+
+    this.state = {
+      /**
+       * @type {string[]}
+       */
+      collapsed: [],
+    }
+  }
+
   static contextType = Context
 
   categorize (mods) {
@@ -37,6 +48,23 @@ class Mods extends Component {
     return [...categories]
   }
 
+  /**
+   * @param {string} category Category to toggle
+   */
+  toggleCategory (category) {
+    /**
+     * @type {string[]}
+     */
+    const current = JSON.parse(JSON.stringify(this.state.collapsed))
+    const isCollapsed = current.includes(category)
+
+    const collapsed = isCollapsed ?
+      current.filter(x => x !== category) :
+      [...current, category]
+
+    this.setState({ collapsed })
+  }
+
   render () {
     const categories = this.categorize(this.context.mods)
 
@@ -64,13 +92,20 @@ class Mods extends Component {
               <tr onClick={ () => { this.context.setSelected(null) } }>
                 <td colSpan={ 5 }>
                   <div style={{ display: 'flex', alignItems: 'center', marginTop: i === 0 ? '30px' : undefined }}>
-                    <b style={{ marginRight: '12px' }}>{ name }</b>
+                    <b style={{ marginRight: '12px' }}>
+                      <i
+                        className={ `fas fa-angle-down collapse${this.state.collapsed.includes(name) ? ' collapsed' : ''}` }
+                        onClick={ () => this.toggleCategory(name) }
+                      ></i>
+                      &nbsp; <span onDoubleClick={ () => this.toggleCategory(name) }>{ name }</span>
+                    </b>
+
                     <div className='separator'></div>
                   </div>
                 </td>
               </tr>
 
-              { mods.map((mod, j) => {
+              { this.state.collapsed.includes(name) ? null : mods.map((mod, j) => {
                 const locked = mod.install.requiredBy.length > 0 || mod.install.conflictsWith.length > 0
 
                 return (
