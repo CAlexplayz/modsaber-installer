@@ -115,7 +115,7 @@ class Mods extends Component {
                     onClick={ e => { if (e.target.type !== 'i') this.context.setSelected(mod.index) } }
                   >
                     <td
-                      className={ `icon${!locked ? '' : ' disabled'}` }
+                      className={ `icon checkbox${!locked ? '' : ' disabled'}` }
                       onClick={ () => { this.context.toggleMod(mod.index) } }
                     >
                       <i className={ `far fa-${mod.install.selected || mod.install.requiredBy.length > 0 || false ? 'check-square' : 'square'}` }></i>

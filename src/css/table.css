@@ -71,8 +71,13 @@ td.icon.locked i {
   margin-top: 0;
 }
 
+td.icon.checkbox i {
+  cursor: pointer;
+}
+
 td.icon.disabled i {
   color: #868686;
+  cursor: not-allowed;
 }
 
 td.icon.hidden i {
@@ -88,6 +93,8 @@ div.separator {
 i.collapse {
   transform: translateY(1px);
   transition: transform 0.15s ease-in-out;
+
+  cursor: pointer;
 }
 
 i.collapse.collapsed {

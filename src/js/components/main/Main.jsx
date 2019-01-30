@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Helmet from 'react-helmet'
 
 import * as c from '../../constants.js'
 
@@ -25,14 +26,19 @@ class Main extends Component {
   render () {
     if (this.context.jobs.length > 0 || this.context.status === c.STATUS_LOADING) {
       return (
-        <Status spin>
-          {
-            this.context.jobs.includes(c.AUTO_UPDATE_JOB) ? 'Updating Installer' :
-              this.context.status === c.STATUS_LOADING ?
-                'Loading' :
-                'Working'
-          }...
-        </Status>
+        <>
+          <Status spin>
+            {
+              this.context.jobs.includes(c.AUTO_UPDATE_JOB) ? 'Updating Installer' :
+                this.context.status === c.STATUS_LOADING ?
+                  'Loading' :
+                  'Working'
+            }...
+          </Status>
+          <Helmet>
+            <style>{`* { cursor: progress !important; }`}</style>
+          </Helmet>
+        </>
       )
     }
 
