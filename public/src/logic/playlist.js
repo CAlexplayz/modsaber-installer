@@ -56,8 +56,11 @@ const installPlaylist = async (playlist, installDir) => {
   fse.writeFile(path.join(installDir, 'Playlists', playlist.fileName), playlist.raw)
 
   // Start jobs for every song
-  const jobs = playlist.songs.map(({ key }) => {
-    const job = beatSaverBeatmap(key)
+  const jobs = playlist.songs.map(({ key, hash }) => {
+    const job = key ?
+      beatSaverBeatmap(key) :
+      beatSaverBeatmap(hash)
+
     return runJob(job)
   })
   await Promise.all(jobs)
