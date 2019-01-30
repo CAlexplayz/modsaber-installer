@@ -48,7 +48,7 @@ Actions that upload to hastebin will copy the resulting URL to your clipboard au
 | <kbd>CTRL</kbd> + <kbd>SHIFT</kbd> + <kbd>D</kbd> | Run diagnostic report and upload to hastebin |
 
 ## Screenshot
-![Screenshot](https://b.catgirlsare.sexy/Lvds.png)
+![Screenshot](https://b.catgirlsare.sexy/eoRF.png)
 
 ## Credits
 * Written by [lolPants](https://github.com/lolPants) with code from [Additional Contributors](https://github.com/lolPants/modsaber-installer/graphs/contributors)
