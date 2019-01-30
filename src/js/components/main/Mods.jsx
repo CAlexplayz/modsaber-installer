@@ -113,6 +113,7 @@ class Mods extends Component {
                     key={ j }
                     className={ mod.index !== this.context.selected ? '' : 'selected' }
                     onClick={ e => { if (e.target.type !== 'i') this.context.setSelected(mod.index) } }
+                    onDoubleClick={ e => { if (e.target.type !== 'i') this.context.toggleMod(mod.index) } }
                   >
                     <td
                       className={ `icon checkbox${!locked ? '' : ' disabled'}` }
