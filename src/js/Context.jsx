@@ -66,6 +66,16 @@ export class ControllerProvider extends Component {
       const resp = await (task === 'enqueue' ? this.enqueueJob(id) : this.dequeueJob(id))
       ipcRenderer.send('queue-job-resp', { id: resp, noonce })
     })
+
+    window.addEventListener('keydown', ev => {
+      if (ev.key !== ' ') return undefined
+      if (this.state.selected === null) return undefined
+
+      this.toggleMod(this.state.selected)
+
+      ev.preventDefault()
+      return false
+    })
   }
 
   static propTypes = {
