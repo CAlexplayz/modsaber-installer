@@ -1,6 +1,7 @@
 const path = require('path')
 const { app, BrowserWindow, dialog, Menu, shell } = require('electron')
 const { autoUpdater } = require('electron-updater')
+const log = require('electron-log')
 const isDev = require('electron-is-dev')
 const { handleSchema, handleFiles } = require('./src/events/argv.js')
 const { enqueueJob, dequeueJob } = require('./src/utils/queue.js')
@@ -29,6 +30,15 @@ let window
  */
 let loadingWindow
 
+const hasUpdateController = {
+  resolve: () => {
+    // No-op
+  },
+  reject: () => {
+    // No-op
+  },
+}
+
 app.on('ready', () => {
   loadingWindow = new BrowserWindow({
     width: 290,
@@ -52,7 +62,14 @@ app.on('ready', () => {
     else return (await autoUpdater.checkForUpdates()).cancellationToken !== undefined
   }
 
-  const hasUpdate = updateCheck()
+  const hasUpdate = new Promise((resolve, reject) => {
+    hasUpdateController.resolve = resolve
+    hasUpdateController.reject = reject
+
+    updateCheck()
+      .then(resolve)
+      .catch(reject)
+  })
 
   const width = 820
   const height = 590
@@ -84,6 +101,11 @@ app.on('ready', () => {
 
   window.setTitle(`ModSaber Installer // v${VERSION}`)
   window.once('ready-to-show', async () => {
+    setTimeout(() => {
+      log.error('Loading timeout!')
+      hasUpdateController.resolve(false)
+    }, 15 * 1000)
+
     if (await hasUpdate) {
       await enqueueJob(AUTO_UPDATE_JOB)
       autoUpdater.downloadUpdate()
@@ -161,6 +183,9 @@ autoUpdater.on('update-downloaded', async () => {
   autoUpdater.quitAndInstall(true, true)
 })
 
-autoUpdater.on('error', () => {
+autoUpdater.on('error', err => {
+  log.error(err)
+
+  hasUpdateController.resolve(false)
   dequeueJob(AUTO_UPDATE_JOB)
 })
