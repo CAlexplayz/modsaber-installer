@@ -37,6 +37,7 @@ const hasUpdateController = {
   reject: () => {
     // No-op
   },
+  pending: true,
 }
 
 app.on('ready', () => {
@@ -67,8 +68,14 @@ app.on('ready', () => {
     hasUpdateController.reject = reject
 
     updateCheck()
-      .then(resolve)
-      .catch(reject)
+      .then(value => {
+        hasUpdateController.pending = false
+        return resolve(value)
+      })
+      .catch(err => {
+        hasUpdateController.pending = false
+        return reject(err)
+      })
   })
 
   const width = 820
@@ -102,8 +109,10 @@ app.on('ready', () => {
   window.setTitle(`ModSaber Installer // v${VERSION}`)
   window.once('ready-to-show', async () => {
     setTimeout(() => {
-      log.error('Loading timeout!')
-      hasUpdateController.resolve(false)
+      if (hasUpdateController.pending) {
+        log.error('Loading timeout!')
+        hasUpdateController.resolve(false)
+      }
     }, 15 * 1000)
 
     if (await hasUpdate) {
