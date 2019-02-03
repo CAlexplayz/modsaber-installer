@@ -1,9 +1,9 @@
 const { inspect } = require('util')
 const log = require('electron-log')
-const { default: fetch } = require('node-fetch')
+const fetch = require('../utils/fetch.js')
 const { extractZip, safeDownload } = require('./remote.js')
-const { calculateHash, agent } = require('../utils/helpers.js')
-const { API_URL, USER_AGENT, BLOCKED_EXTENSIONS } = require('../constants.js')
+const { calculateHash } = require('../utils/helpers.js')
+const { API_URL, BLOCKED_EXTENSIONS } = require('../constants.js')
 
 /**
  * @typedef {Object} Files
@@ -35,7 +35,7 @@ const { API_URL, USER_AGENT, BLOCKED_EXTENSIONS } = require('../constants.js')
 const fetchMods = async (options, series = false) => {
   const type = options || 'latest'
 
-  const pageResp = await fetch(`${API_URL}/mods/approved/${type}`, { headers: { 'User-Agent': USER_AGENT }, agent })
+  const pageResp = await fetch(`${API_URL}/mods/approved/${type}`)
   const { lastPage } = await pageResp.json()
   const pages = Array.from(new Array(lastPage + 1)).map((_, i) => i)
 
@@ -44,7 +44,7 @@ const fetchMods = async (options, series = false) => {
    * @returns {Promise.<Mod[]>}
    */
   const fetchPage = async page => {
-    const modResp = await fetch(`${API_URL}/mods/approved/${type}/${page}`, { headers: { 'User-Agent': USER_AGENT }, agent })
+    const modResp = await fetch(`${API_URL}/mods/approved/${type}/${page}`)
 
     if (!modResp.ok) {
       const err = new Error(`${modResp.status} ${modResp.statusText}`.trim())
@@ -89,7 +89,7 @@ const fetchModsSafer = async options => {
     const mods = await fetchMods(options)
     return mods
   } catch (err) {
-    if (err.code === 'FETCHERROR') {
+    if (err.type === 'fetch') {
       log.error(`${err.message} - ${err.url}`)
       err.message = 'Could not connect to ModSaber!'
 
@@ -108,7 +108,7 @@ const fetchModsSafer = async options => {
  * @returns {Promise.<{ id: string, value: string, manifest: string, selected: boolean }[]>}
  */
 const fetchGameVersions = async () => {
-  const resp = await fetch(`${API_URL}/site/gameversions`, { headers: { 'User-Agent': USER_AGENT }, agent })
+  const resp = await fetch(`${API_URL}/site/gameversions`)
   const body = await resp.json()
 
   return body
@@ -163,7 +163,7 @@ const downloadMod = async (mod, platform, installDir) => {
  * @returns {Promise.<Mod[]>}
  */
 const fetchByHash = async (hash, path) => {
-  const params = { headers: { 'User-Agent': USER_AGENT }, agent }
+  const params = {}
 
   // Set path if given
   if (path) {

@@ -1,8 +1,6 @@
 const path = require('path')
 const AdmZip = require('adm-zip')
-const { default: fetch } = require('node-fetch')
-const { agent } = require('../utils/helpers.js')
-const { USER_AGENT } = require('../constants.js')
+const fetch = require('../utils/fetch.js')
 
 /**
  * @param {string} url URL
@@ -11,11 +9,10 @@ const { USER_AGENT } = require('../constants.js')
  */
 const safeDownload = async (url, binary = false) => {
   try {
-    const resp = await fetch(url, { headers: { 'User-Agent': USER_AGENT }, agent })
+    const resp = await fetch(url)
     const body = binary ? await resp.buffer() : await resp.json()
 
-    if (resp.status !== 200) throw new Error('Status not 200')
-    else return { error: undefined, body }
+    return { error: undefined, body }
   } catch (err) {
     return { error: err, body: null }
   }

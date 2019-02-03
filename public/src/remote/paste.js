@@ -1,6 +1,5 @@
-const { default: fetch } = require('node-fetch')
-const { agent } = require('../utils/helpers.js')
-const { USER_AGENT, HASTE_URL } = require('../constants.js')
+const fetch = require('../utils/fetch.js')
+const { HASTE_URL } = require('../constants.js')
 
 /**
  * Upload text to a Hastebin compatible clone
@@ -10,10 +9,8 @@ const { USER_AGENT, HASTE_URL } = require('../constants.js')
  */
 const uploadPaste = async (body, ext) => {
   const resp = await fetch(`${HASTE_URL}/documents`, {
-    method: 'post',
-    headers: { 'User-Agent': USER_AGENT },
+    method: 'POST',
     body,
-    agent,
   })
 
   const { key } = await resp.json()
