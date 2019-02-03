@@ -45,18 +45,8 @@ const fetchMods = async (options, series = false) => {
    */
   const fetchPage = async page => {
     const modResp = await fetch(`${API_URL}/mods/approved/${type}/${page}`)
-
-    if (!modResp.ok) {
-      const err = new Error(`${modResp.status} ${modResp.statusText}`.trim())
-
-      err.code = 'FETCHERROR'
-      err.url = modResp.url
-      Object.assign(err, modResp)
-
-      throw err
-    }
-
     const { mods } = await modResp.json()
+
     return mods
   }
 
