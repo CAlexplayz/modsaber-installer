@@ -1,3 +1,4 @@
+const { inspect } = require('util')
 const log = require('electron-log')
 const { default: fetch } = require('node-fetch')
 const { extractZip, safeDownload } = require('./remote.js')
@@ -44,8 +45,18 @@ const fetchMods = async (options, series = false) => {
    */
   const fetchPage = async page => {
     const modResp = await fetch(`${API_URL}/mods/approved/${type}/${page}`, { headers: { 'User-Agent': USER_AGENT }, agent })
-    const { mods } = await modResp.json()
 
+    if (!modResp.ok) {
+      const err = new Error(`${modResp.status} ${modResp.statusText}`.trim())
+
+      err.code = 'FETCHERROR'
+      err.url = modResp.url
+      Object.assign(err, modResp)
+
+      throw err
+    }
+
+    const { mods } = await modResp.json()
     return mods
   }
 
@@ -78,7 +89,13 @@ const fetchModsSafer = async options => {
     const mods = await fetchMods(options)
     return mods
   } catch (err) {
-    const { inspect } = require('util')
+    if (err.code === 'FETCHERROR') {
+      log.error(`${err.message} - ${err.url}`)
+      err.message = 'Could not connect to ModSaber!'
+
+      throw err
+    }
+
     log.debug('fetchModsSafer() Error', inspect(err), JSON.stringify(err))
     if (err.code !== 'ETIMEDOUT') throw err
 
