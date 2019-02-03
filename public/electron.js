@@ -17,8 +17,9 @@ require('./src/events/diagnostics.js')
 const instanceLock = app.requestSingleInstanceLock()
 if (!instanceLock) app.quit()
 
-// Setup Auto Updater
+// Setup Auto Updater and Logger
 autoUpdater.autoDownload = false
+log.transports.file.level = 'warn'
 
 /**
  * @type {BrowserWindow}
