@@ -16,7 +16,7 @@ const initialState = {
   mods: {
     raw: [],
     list: [],
-    selected: 0,
+    selected: null,
   },
 
   gameVersions: [],
@@ -24,6 +24,7 @@ const initialState = {
   install: {
     path: null,
     platform: 'unknown',
+    pirated: false,
   },
 
   jobs: [],

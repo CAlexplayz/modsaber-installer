@@ -16,7 +16,7 @@ import { SET_MODS_RAW, SET_MODS_LIST, SET_SELECTED_MOD } from '../actions/types.
  * @param {{ type: ActionType, payload: (any[]|number) }} action Action
  * @returns {State}
  */
-const reducer = (state = { raw: [], list: [], selected: 0 }, action) => {
+const reducer = (state = { raw: [], list: [], selected: null }, action) => {
   switch (action.type) {
     case SET_MODS_RAW:
       return { ...state, raw: action.payload }
