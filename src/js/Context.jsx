@@ -25,22 +25,22 @@ export class ControllerProvider extends Component {
     super(props)
 
     this.state = {
-      theme: store.get('theme') || 'light',
+      // theme: store.get('theme') || 'light',
 
-      statusText: c.STATUS_TEXT_IDLE,
-      install: { path: null, platform: 'unknown' },
-      status: c.STATUS_LOADING,
-      jobs: [],
+      // statusText: c.STATUS_TEXT_IDLE,
+      // install: { path: null, platform: 'unknown' },
+      // status: c.STATUS_LOADING,
+      // jobs: [],
 
-      rawMods: [],
-      gameVersions: [],
-      mods: [],
+      // rawMods: [],
+      // gameVersions: [],
+      // mods: [],
 
-      currentPage: 0,
-      maxPages: null,
-      selected: null,
+      // currentPage: 0,
+      // maxPages: null,
+      // selected: null,
 
-      container: undefined,
+      // container: undefined,
     }
 
     ipcRenderer.on('set-status', (_, { text, status }) => {
