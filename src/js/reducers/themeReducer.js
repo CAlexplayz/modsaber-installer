@@ -1,11 +1,14 @@
-import { TOGGLE_THEME, SET_THEME, SET_THEME_LIGHT, SET_THEME_DARK } from '../actions/types.js'
+import { SET_THEME } from '../actions/types.js'
+
+const ElectronStore = window.require('electron-store')
+const electronStore = new ElectronStore()
 
 /**
  * @typedef {('light'|'dark')} State
  */
 
 /**
- * @typedef {('TOGGLE_THEME'|'SET_THEME'|'SET_THEME_LIGHT'|'SET_THEME_DARK')} ActionType
+ * @typedef {'SET_THEME'} ActionType
  */
 
 /**
@@ -14,18 +17,16 @@ import { TOGGLE_THEME, SET_THEME, SET_THEME_LIGHT, SET_THEME_DARK } from '../act
  * @returns {State}
  */
 const reducer = (state, action) => {
-  switch (action.type) {
-    case TOGGLE_THEME:
-      return state === 'light' ? 'dark' : 'light'
-    case SET_THEME:
-      return action.payload
-    case SET_THEME_LIGHT:
-      return 'light'
-    case SET_THEME_DARK:
-      return 'dark'
-    default:
-      return state
-  }
+  if (action.type !== SET_THEME) return state
+
+  const [html] = document.getElementsByTagName('html')
+  const theme = state === 'light' ? 'dark' : 'light'
+
+  if (theme === 'dark') html.classList.add('dark')
+  else html.classList.remove('dark')
+
+  electronStore.set('theme', theme)
+  return theme
 }
 
 export default reducer

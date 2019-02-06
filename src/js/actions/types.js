@@ -1,9 +1,6 @@
 /* eslint no-multi-spaces: off */
 
-export const TOGGLE_THEME         = 'TOGGLE_THEME'
 export const SET_THEME            = 'SET_THEME'
-export const SET_THEME_LIGHT      = 'SET_THEME_LIGHT'
-export const SET_THEME_DARK       = 'SET_THEME_DARK'
 
 export const SET_STATUS           = 'SET_STATUS'
 export const SET_STATUS_TYPE      = 'SET_STATUS_TYPE'
