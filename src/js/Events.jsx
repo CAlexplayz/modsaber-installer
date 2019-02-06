@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
+import Konami from 'react-konami'
 import { connect } from 'react-redux'
 import { ipcRenderer } from './utils/electron'
 
+import { toggleTheme } from './actions/themeActions'
 import { setInstall } from './actions/installActions'
 import { setMods, toggleMod } from './actions/modsActions'
 import { setGameVersions } from './actions/gameVersionsActions'
@@ -9,16 +11,10 @@ import { enqueueJob, dequeueJob } from './actions/jobsActions'
 import { setStatus, setStatusType, setStatusText } from './actions/statusActions'
 
 import {
-  STATUS_LOADING,
   STATUS_LOADED,
   STATUS_OFFLINE,
   STATUS_TEXT_LOADING,
   STATUS_TEXT_LOADED,
-  STATUS_TEXT_IDLE,
-  MODS_DEFAULT,
-  MODS_REQUIRED,
-  CATEGORY_DEFAULT,
-  ERR_NOT_SATISFIED,
 } from './constants'
 
 class Events extends Component {
@@ -66,7 +62,11 @@ class Events extends Component {
 
   render () {
     return (
-      this.props.children
+      <>
+        { this.props.children }
+
+        <Konami easterEgg={ () => this.props.toggleTheme() } />
+      </>
     )
   }
 }
@@ -85,4 +85,5 @@ export default connect(mapStateToProps, {
   setGameVersions,
   enqueueJob,
   dequeueJob,
+  toggleTheme,
 })(Events)

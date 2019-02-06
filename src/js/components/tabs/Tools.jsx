@@ -4,7 +4,7 @@ import Helmet from 'react-helmet'
 import { ipcRenderer } from '../../utils/electron'
 import { openLog, uploadLog } from '../../utils/logs.js'
 
-import { setTheme } from '../../actions/themeActions'
+import { toggleTheme } from '../../actions/themeActions'
 import { STATUS_LOADING } from '../../constants/index.js'
 
 class Tools extends Component {
@@ -24,7 +24,7 @@ class Tools extends Component {
           <h1>Theme</h1>
           <button
             className='button'
-            onClick={ () => this.props.setTheme('dark') }>Activate { this.props.theme === 'dark' ? 'Light' : 'Dark' } Theme
+            onClick={ () => this.props.toggleTheme() }>Activate { this.props.theme === 'dark' ? 'Light' : 'Dark' } Theme
           </button>
 
           <hr />
@@ -51,4 +51,4 @@ const mapStateToProps = state => ({
   jobs: state.jobs,
 })
 
-export default connect(mapStateToProps, { setTheme })(Tools)
+export default connect(mapStateToProps, { toggleTheme })(Tools)
