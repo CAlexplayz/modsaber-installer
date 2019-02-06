@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
-import Context from '../Context.jsx'
+import { connect } from 'react-redux'
+
+import { setCurrentTab, setMaxTabs } from '../actions/tabsActions'
+import { setContainer } from '../actions/containerActions'
 
 import Main from './main/Main.jsx'
 import Tools from './tabs/Tools.jsx'
@@ -8,8 +11,6 @@ import Credits from './tabs/Credits.jsx'
 import ModInfo from './tabs/ModInfo.jsx'
 
 class MainTabs extends Component {
-  static contextType = Context
-
   constructor (props) {
     super(props)
 
@@ -24,22 +25,22 @@ class MainTabs extends Component {
   }
 
   componentDidMount () {
-    this.context.setMaxPages(this.pages.length)
+    this.props.setMaxTabs(this.pages.length)
   }
 
   componentDidUpdate () {
-    if (this.context.container !== undefined) return undefined
+    if (this.props.container !== undefined) return undefined
     if (this.container.current === null) return undefined
 
-    return this.context.setContainer(this.container.current)
+    return this.props.setContainer(this.container.current)
   }
 
   render () {
-    const pages = this.context.selected === null ? this.pages :
+    const pages = this.props.selected === null ? this.pages :
       [...this.pages, { title: 'Mod Info', component: <ModInfo /> }]
 
-    const selected = this.context.currentPage > pages.length - 1 ? 0 :
-      this.context.currentPage
+    const selected = this.props.currentTab > pages.length - 1 ? 0 :
+      this.props.currentTab
 
     return (
       <>
@@ -51,8 +52,8 @@ class MainTabs extends Component {
                 draggable={ false }
                 onClick={ e => {
                   e.preventDefault()
-                  if (i !== this.context.currentPage) this.container.current.scrollTop = 0
-                  this.context.setCurrentPage(i)
+                  if (i !== this.props.currentTab) this.container.current.scrollTop = 0
+                  this.props.setCurrentTab(i)
                 } }
               >
                 { title }
@@ -69,4 +70,10 @@ class MainTabs extends Component {
   }
 }
 
-export default MainTabs
+const mapStateToProps = state => ({
+  container: state.container,
+  selected: state.mods.selected,
+  currentTab: state.tabs.current,
+})
+
+export default connect(mapStateToProps, { setCurrentTab, setMaxTabs, setContainer })(MainTabs)

@@ -1,12 +1,10 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { ipcRenderer, dialog, getCurrentWindow } from '../utils/electron'
-import Context from '../Context.jsx'
 
 import { STATUS_LOADING, STATUS_OFFLINE } from '../constants'
 
 class PathPicker extends Component {
-  static contextType = Context
-
   componentDidMount () {
     ipcRenderer.on('invalid-path', (_, path) => {
       dialog.showMessageBox(getCurrentWindow(), {
@@ -28,7 +26,7 @@ class PathPicker extends Component {
   openDialog (defaultPath) {
     dialog.showOpenDialog(getCurrentWindow(), {
       properties: ['openDirectory'],
-      defaultPath: defaultPath || this.context.install.path || undefined,
+      defaultPath: defaultPath || this.props.install.path || undefined,
     }, paths => {
       if (paths === undefined) return
       const [path] = paths
@@ -60,7 +58,7 @@ class PathPicker extends Component {
               type='text'
               className='input monospaced'
               readOnly
-              value={ this.context.install.path || '' }
+              value={ this.props.install.path || '' }
             />
 
             <span className='icon is-left'>
@@ -77,11 +75,11 @@ class PathPicker extends Component {
 
         <div className='select' style={{ marginLeft: '10px' }} onChange={ e => { this.switchVersion(JSON.parse(e.target.value)) } }>
           <select disabled={
-            this.context.jobs.length > 0 ||
-            this.context.status === STATUS_LOADING ||
-            this.context.status === STATUS_OFFLINE
+            this.props.jobs.length > 0 ||
+            this.props.status === STATUS_LOADING ||
+            this.props.status === STATUS_OFFLINE
           }>
-            { this.context.gameVersions.map((gv, i) =>
+            { this.props.gameVersions.map((gv, i) =>
               <option value={ JSON.stringify(gv) } selected={ gv.selected } key={ i }>
                 { gv.value }
               </option>)
@@ -93,4 +91,11 @@ class PathPicker extends Component {
   }
 }
 
-export default PathPicker
+const mapStateToProps = state => ({
+  status: state.status,
+  jobs: state.jobs,
+  install: state.install,
+  gameVersions: state.gameVersions,
+})
+
+export default connect(mapStateToProps)(PathPicker)

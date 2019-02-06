@@ -1,22 +1,16 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import Helmet from 'react-helmet'
-import Context from '../../Context.jsx'
 import { ipcRenderer } from '../../utils/electron'
 import { openLog, uploadLog } from '../../utils/logs.js'
 
+import { setTheme } from '../../actions/themeActions'
 import { STATUS_LOADING } from '../../constants/index.js'
 
 class Tools extends Component {
-  static contextType = Context
-
-  toggleTheme () {
-    const theme = this.context.theme === 'dark' ? 'light' : 'dark'
-    this.context.setTheme(theme)
-  }
-
   render () {
-    const working = this.context.jobs.length > 0
-    const disabled = working || this.context.status === STATUS_LOADING
+    const working = this.props.jobs.length > 0
+    const disabled = working || this.props.status.type === STATUS_LOADING
 
     return (
       <>
@@ -28,14 +22,17 @@ class Tools extends Component {
 
         <div className='content tools'>
           <h1>Theme</h1>
-          <button className='button' onClick={ () => this.toggleTheme() }>Activate { this.context.theme === 'dark' ? 'Light' : 'Dark' } Theme</button>
+          <button
+            className='button'
+            onClick={ () => this.props.setTheme('dark') }>Activate { this.props.theme === 'dark' ? 'Light' : 'Dark' } Theme
+          </button>
 
           <hr />
           <h1>Diagnostics</h1>
           <button className={ `button${working ? ' is-loading' : ''}` } disabled={ disabled }
             onClick={ () => ipcRenderer.send('run-diagnostics') }>Run Diagnostics</button>
           <button className={ `button${working ? ' is-loading' : ''}` } disabled={ disabled }
-            onClick={ () => ipcRenderer.send('patch-game', this.context.install) }>Patch Game</button>
+            onClick={ () => ipcRenderer.send('patch-game', this.props.install) }>Patch Game</button>
 
           <hr />
           <h1>ModSaber Installer Log</h1>
@@ -47,4 +44,11 @@ class Tools extends Component {
   }
 }
 
-export default Tools
+const mapStateToProps = state => ({
+  theme: state.theme,
+  install: state.install,
+  status: state.status,
+  jobs: state.jobs,
+})
+
+export default connect(mapStateToProps, { setTheme })(Tools)

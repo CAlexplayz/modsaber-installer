@@ -1,32 +1,27 @@
-import React, { Component } from 'react'
+import React from 'react'
 import Helmet from 'react-helmet'
+import { connect } from 'react-redux'
 
-import Context from '../../Context.jsx'
-import MarkdownRenderer from '../Markdown.jsx'
+import MarkdownRenderer from '../Markdown'
 
-class ModInfo extends Component {
-  static contextType = Context
+const ModInfo = ({ mod }) =>
+  <>
+    <Helmet>
+      <style>
+        { `div.box#main { justify-content: initial; align-items: initial; padding: 15px; overflow-y: scroll; }` }
+      </style>
+    </Helmet>
 
-  render () {
-    const mod = this.context.mods[this.context.selected]
+    <div className='content'>
+      <h1>{ mod.details.title }</h1>
+      <hr />
 
-    return (
-      <>
-        <Helmet>
-          <style>
-            { `div.box#main { justify-content: initial; align-items: initial; padding: 15px; overflow-y: scroll; }` }
-          </style>
-        </Helmet>
+      <MarkdownRenderer source={ mod.details.description } />
+    </div>
+  </>
 
-        <div className='content'>
-          <h1>{ mod.details.title }</h1>
-          <hr />
+const mapStateToProps = state => ({
+  mod: state.mods.list[state.mods.selected],
+})
 
-          <MarkdownRenderer source={ mod.details.description } />
-        </div>
-      </>
-    )
-  }
-}
-
-export default ModInfo
+export default connect(mapStateToProps)(ModInfo)

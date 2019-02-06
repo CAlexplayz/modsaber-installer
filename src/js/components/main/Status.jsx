@@ -8,7 +8,7 @@ const Status = props =>
   </>
 
 Status.propTypes = {
-  icon: PropTypes.string.isRequired,
+  icon: PropTypes.string,
   children: PropTypes.node.isRequired,
   spin: PropTypes.bool,
 }

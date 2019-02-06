@@ -1,7 +1,8 @@
 import React, { Component, Fragment } from 'react'
+import { connect } from 'react-redux'
 import Helmet from 'react-helmet'
-import Context from '../../Context.jsx'
 
+import { setSelectedMod, toggleMod } from '../../actions/modsActions'
 import { CATEGORY_DEFAULT } from '../../constants'
 
 import '../../../css/scrollbar.css'
@@ -18,8 +19,6 @@ class Mods extends Component {
       collapsed: [],
     }
   }
-
-  static contextType = Context
 
   categorize (mods) {
     const categories = []
@@ -66,7 +65,7 @@ class Mods extends Component {
   }
 
   render () {
-    const categories = this.categorize(this.context.mods)
+    const categories = this.categorize(this.props.mods)
 
     return (
       <>
@@ -78,7 +77,7 @@ class Mods extends Component {
 
         <table className='table is-narrow is-fullwidth'>
           <thead>
-            <div onClick={ () => { this.context.setSelected(null) } } className='header'></div>
+            <div onClick={ () => { this.props.setSelectedMod(null) } } className='header'></div>
             <tr>
               <th>-<div></div></th>
               <th>Name<div>Name</div></th>
@@ -89,7 +88,7 @@ class Mods extends Component {
 
           <tbody>{ categories.map(({ name, mods }, i) =>
             <Fragment key={ i }>
-              <tr onClick={ () => { this.context.setSelected(null) } }>
+              <tr onClick={ () => { this.props.setSelectedMod(null) } }>
                 <td colSpan={ 5 }>
                   <div style={{ display: 'flex', alignItems: 'center', marginTop: i === 0 ? '30px' : undefined }}>
                     <b style={{ marginRight: '12px' }}>
@@ -111,13 +110,13 @@ class Mods extends Component {
                 return (
                   <tr
                     key={ j }
-                    className={ mod.index !== this.context.selected ? '' : 'selected' }
-                    onClick={ e => { if (e.target.type !== 'i') this.context.setSelected(mod.index) } }
-                    onDoubleClick={ e => { if (e.target.type !== 'i') this.context.toggleMod(mod.index) } }
+                    className={ mod.index !== this.props.selected ? '' : 'selected' }
+                    onClick={ e => { if (e.target.type !== 'i') this.props.setSelectedMod(mod.index) } }
+                    onDoubleClick={ e => { if (e.target.type !== 'i') this.props.toggleMod(mod.index) } }
                   >
                     <td
                       className={ `icon checkbox${!locked ? '' : ' disabled'}` }
-                      onClick={ () => { this.context.toggleMod(mod.index) } }
+                      onClick={ () => { this.props.toggleMod(mod.index) } }
                     >
                       <i className={ `far fa-${mod.install.selected || mod.install.requiredBy.length > 0 || false ? 'check-square' : 'square'}` }></i>
                     </td>
@@ -144,4 +143,9 @@ class Mods extends Component {
   }
 }
 
-export default Mods
+const mapStateToProps = state => ({
+  mods: state.mods.list,
+  selected: state.mods.selected,
+})
+
+export default connect(mapStateToProps, { setSelectedMod, toggleMod })(Mods)

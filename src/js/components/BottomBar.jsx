@@ -1,44 +1,43 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { shell } from '../utils/electron'
-import Context from '../Context.jsx'
 
+import { setCurrentTab, setMaxTabs } from '../actions/tabsActions'
 import { STATUS_LOADING, STATUS_OFFLINE } from '../constants'
 
 class BottomBar extends Component {
-  static contextType = Context
-
   handleModInfo () {
-    const page = this.context.currentPage !== this.context.maxPages ?
-      this.context.maxPages : 0
+    const tab = this.props.tabs.current !== this.props.tabs.max ?
+      this.props.tabs.max : 0
 
-    if (this.context.container !== undefined) this.context.container.scrollTop = 0
-    return this.context.setCurrentPage(page)
+    if (this.props.container !== null) this.props.container.scrollTop = 0
+    return this.props.setCurrentTab(tab)
   }
 
   render () {
     return (
       <>
         <span className='status'>
-          { this.context.status === STATUS_OFFLINE ? 'Error' : 'Status' }: { this.context.statusText }
+          { this.props.status.type === STATUS_OFFLINE ? 'Error' : 'Status' }: { this.props.status.text }
         </span>
 
         <button
           className='button'
-          disabled={ this.context.install.pirated || this.context.selected === null }
+          disabled={ this.props.install.pirated || this.props.selected === null }
           onClick={ () => this.handleModInfo() }
         >
-          { this.context.currentPage !== this.context.maxPages ? 'View Selected Mod Info' : 'Go Back' }
+          { this.props.tabs.current !== this.props.tabs.max ? 'View Selected Mod Info' : 'Go Back' }
         </button>
 
         {
-          this.context.install.pirated ?
+          this.props.install.pirated ?
             <button className='button' onClick={ () => shell.openExternal('https://beatgames.com/') }>Buy the Game</button> :
             <button
-              className={ `button${this.context.jobs.length > 0 ? ' is-loading' : ''}` }
+              className={ `button${this.props.jobs.length > 0 ? ' is-loading' : ''}` }
               disabled={
-                this.context.jobs.length > 0 ||
-                this.context.status === STATUS_LOADING ||
-                this.context.mods.length === 0
+                this.props.jobs.length > 0 ||
+                this.props.status.type === STATUS_LOADING ||
+                this.props.mods.length === 0
               }
               onClick={ () => { this.context.installMods() } }
             >
@@ -50,4 +49,13 @@ class BottomBar extends Component {
   }
 }
 
-export default BottomBar
+const mapStateToProps = state => ({
+  status: state.status,
+  tabs: state.tabs,
+  install: state.install,
+  mods: state.mods,
+  jobs: state.jobs,
+  container: state.container,
+})
+
+export default connect(mapStateToProps, { setCurrentTab, setMaxTabs })(BottomBar)
