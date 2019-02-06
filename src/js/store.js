@@ -26,6 +26,8 @@ const initialState = {
     platform: 'unknown',
   },
 
+  jobs: [],
+
   tabs: {
     max: 0,
     current: 0,

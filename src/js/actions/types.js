@@ -16,6 +16,10 @@ export const SET_GAME_VERSIONS    = 'SET_GAME_VERSIONS'
 export const SET_INSTALL_PATH     = 'SET_INSTALL_PATH'
 export const SET_INSTALL_PLATFORM = 'SET_INSTALL_PLATFORM'
 
+export const SET_JOBS             = 'SET_JOB'
+export const ENQUEUE_JOB          = 'ENQUEUE_JOB'
+export const DEQUEUE_JOB          = 'DEQUEUE_JOB'
+
 export const SET_TABS_MAX         = 'SET_TABS_MAX'
 export const SET_CURRENT_TAB      = 'SET_CURRENT_TAB'
 export const INCREMENT_TAB_IDX    = 'INCREMENT_TAB_IDX'

@@ -5,6 +5,7 @@ import statusReducer from './statusReducer'
 import modsReducer from './modsReducer'
 import gameVersionsReducer from './gameVersionsReducer'
 import installReducer from './installReducer'
+import jobsReducer from './jobsReducer'
 import tabsReducer from './tabsReducer'
 import containerReducer from './containerReducer'
 
@@ -14,6 +15,7 @@ export default combineReducers({
   mods: modsReducer,
   gameVersions: gameVersionsReducer,
   install: installReducer,
+  jobs: jobsReducer,
   tabs: tabsReducer,
   container: containerReducer,
 })
