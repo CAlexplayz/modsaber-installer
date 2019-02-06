@@ -1,16 +1,6 @@
 import path from 'path'
-
-/**
- * @type {Electron}
- */
-const electron = window.require('electron')
-const { ipcRenderer } = electron
-const { app, shell } = electron.remote
-
-/**
- * @type {import("fs")}
- */
-const fs = electron.remote.require('fs')
+import fs from './fs'
+import { ipcRenderer, app, shell } from './electron'
 
 // Constant log path
 const logPath = path.join(app.getPath('userData'), 'log.log')

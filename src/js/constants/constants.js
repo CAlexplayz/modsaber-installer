@@ -1,10 +1,5 @@
 /* eslint no-multi-spaces: off */
-
-/**
- * @type {Electron}
- */
-const electron = window.require('electron')
-const { getCurrentWindow } = electron.remote
+import { getCurrentWindow } from '../utils/electron'
 
 // Remote URLs
 export const BASE_URL = getCurrentWindow().custom.BASE_URL

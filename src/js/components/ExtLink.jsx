@@ -1,11 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
-/**
- * @type {Electron}
- */
-const electron = window.require('electron')
-const { shell } = electron
+import { shell } from '../utils/electron'
 
 const ExtLink = props =>
   <a

@@ -1,7 +1,5 @@
+import { electronStore } from '../utils/electron'
 import { SET_THEME } from '../actions/types.js'
-
-const ElectronStore = window.require('electron-store')
-const electronStore = new ElectronStore()
 
 /**
  * @typedef {('light'|'dark')} State

@@ -1,14 +1,8 @@
 import React, { Component } from 'react'
+import { ipcRenderer, dialog, getCurrentWindow } from '../utils/electron'
 import Context from '../Context.jsx'
 
 import { STATUS_LOADING, STATUS_OFFLINE } from '../constants'
-
-/**
- * @type {Electron}
- */
-const electron = window.require('electron')
-const { ipcRenderer } = electron
-const { dialog, getCurrentWindow } = electron.remote
 
 class PathPicker extends Component {
   static contextType = Context

@@ -12,16 +12,14 @@ import './css/tools.css'
 
 import './js/shortcuts.js'
 
-/**
- * @type {Electron}
- */
-const electron = window.require('electron')
-const { getCurrentWindow } = electron.remote
+import { getCurrentWindow } from './js/utils/electron'
 const loading = getCurrentWindow().custom.ROLE === 'WINDOW_LOADING'
 
-ReactDOM.render(
+const Root = () => loading ?
+  <Loading /> :
   <ControllerProvider>
-    { loading ? <Loading /> : <App /> }
-  </ControllerProvider>,
-  document.getElementById('root')
+    <App />
+  </ControllerProvider>
+
+ReactDOM.render(<Root/>, document.getElementById('root')
 )

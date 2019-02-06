@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Helmet from 'react-helmet'
+import { ipcRenderer, shell } from '../../utils/electron'
 
 import { AUTO_UPDATE_JOB, STATUS_LOADING, STATUS_TEXT_LOADING, STATUS_OFFLINE } from '../../constants'
 
@@ -13,12 +14,6 @@ const funLinks = [
 ]
 
 const funLink = () => funLinks[Math.floor(Math.random() * funLinks.length)]
-
-/**
- * @type {Electron}
- */
-const electron = window.require('electron')
-const { shell, ipcRenderer } = electron
 
 class Main extends Component {
   static contextType = Context

@@ -1,15 +1,10 @@
 import React, { Component } from 'react'
 import Helmet from 'react-helmet'
 import Context from '../../Context.jsx'
+import { ipcRenderer } from '../../utils/electron'
 import { openLog, uploadLog } from '../../utils/logs.js'
 
 import { STATUS_LOADING } from '../../constants/index.js'
-
-/**
- * @type {Electron}
- */
-const electron = window.require('electron')
-const { ipcRenderer } = electron
 
 class Tools extends Component {
   static contextType = Context

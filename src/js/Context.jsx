@@ -6,16 +6,8 @@ import PropTypes from 'prop-types'
 
 import * as c from './constants.js'
 
-/**
- * @type {Electron}
- */
-const electron = window.require('electron')
-const { ipcRenderer } = electron
-const { dialog, getCurrentWindow } = electron.remote
+import { ipcRenderer, dialog, getCurrentWindow, electronStore as store } from './utils/electron'
 const loading = getCurrentWindow().custom.ROLE === 'WINDOW_LOADING'
-
-const Store = window.require('electron-store')
-const store = new Store()
 
 const Context = React.createContext()
 const { Provider, Consumer } = Context
