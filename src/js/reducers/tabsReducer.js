@@ -15,7 +15,7 @@ import { SET_TABS_MAX, SET_CURRENT_TAB, INCREMENT_TAB_IDX, DECREMENT_TAB_IDX } f
  * @param {{ type: ActionType, payload: (number|undefined) }} action Action
  * @returns {State}
  */
-const reducer = (state, action) => {
+const reducer = (state = { max: 0, current: 0 }, action) => {
   switch (action.type) {
     case SET_TABS_MAX:
       return { ...state, max: action.payload }

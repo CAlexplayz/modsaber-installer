@@ -13,7 +13,7 @@ import { SET_CONTAINER, CLEAR_CONTAINER } from '../actions/types.js'
  * @param {{ type: ActionType, payload: (JSX.Element|undefined) }} action Action
  * @returns {State}
  */
-const reducer = (state, action) => {
+const reducer = (state = null, action) => {
   switch (action.type) {
     case SET_CONTAINER:
       return action.payload

@@ -1,4 +1,5 @@
 import { SET_STATUS, SET_STATUS_TYPE, SET_STATUS_TEXT } from '../actions/types.js'
+import { STATUS_TEXT_IDLE, STATUS_LOADING } from '../constants/statuses'
 
 /**
  * @typedef {Object} State
@@ -15,7 +16,7 @@ import { SET_STATUS, SET_STATUS_TYPE, SET_STATUS_TEXT } from '../actions/types.j
  * @param {{ type: ActionType, payload: (string|State) }} action Action
  * @returns {State}
  */
-const reducer = (state, action) => {
+const reducer = (state = { type: STATUS_LOADING, text: STATUS_TEXT_IDLE }, action) => {
   switch (action.type) {
     case SET_STATUS:
       return action.payload

@@ -13,7 +13,7 @@ import { SET_GAME_VERSIONS } from '../actions/types.js'
  * @param {{ type: ActionType, payload: { manifest: string, selected: boolean }[] }} action Action
  * @returns {State}
  */
-const reducer = (state, action) => {
+const reducer = (state = [], action) => {
   switch (action.type) {
     case SET_GAME_VERSIONS:
       return action.payload

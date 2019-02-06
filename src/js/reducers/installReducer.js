@@ -15,7 +15,7 @@ import { SET_INSTALL_PATH, SET_INSTALL_PLATFORM } from '../actions/types.js'
  * @param {{ type: ActionType, payload: string }} action Action
  * @returns {State}
  */
-const reducer = (state, action) => {
+const reducer = (state = { path: null, platform: 'unknown' }, action) => {
   switch (action.type) {
     case SET_INSTALL_PATH:
       return { ...state, path: action.payload }

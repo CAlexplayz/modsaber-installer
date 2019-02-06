@@ -14,7 +14,7 @@ import { SET_THEME } from '../actions/types.js'
  * @param {{ type: ActionType, payload: (State|undefined) }} action Action
  * @returns {State}
  */
-const reducer = (state, action) => {
+const reducer = (state = 'light', action) => {
   if (action.type !== SET_THEME) return state
 
   const [html] = document.getElementsByTagName('html')
