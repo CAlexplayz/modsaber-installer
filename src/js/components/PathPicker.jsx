@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { ipcRenderer, dialog, getCurrentWindow } from '../utils/electron'
 
+import { setMods } from '../actions/modsActions'
+import { setGameVersions } from '../actions/gameVersionsActions'
 import { STATUS_LOADING, STATUS_OFFLINE } from '../constants'
 
 class PathPicker extends Component {
@@ -35,7 +37,7 @@ class PathPicker extends Component {
   }
 
   switchVersion (gv) {
-    const gameVersions = JSON.parse(JSON.stringify(this.context.gameVersions))
+    const gameVersions = JSON.parse(JSON.stringify(this.props.gameVersions))
       .map(x => {
         delete x.selected
         if (x.manifest === gv.manifest) x.selected = true
@@ -45,8 +47,8 @@ class PathPicker extends Component {
 
     const idx = gameVersions.findIndex(x => x.manifest === gv.manifest)
 
-    this.context.setGameVersions(gameVersions)
-    this.context.filterMods(idx)
+    this.props.setGameVersions(gameVersions)
+    this.props.setMods(idx)
   }
 
   render () {
@@ -98,4 +100,4 @@ const mapStateToProps = state => ({
   gameVersions: state.gameVersions,
 })
 
-export default connect(mapStateToProps)(PathPicker)
+export default connect(mapStateToProps, { setMods, setGameVersions })(PathPicker)

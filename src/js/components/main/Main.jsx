@@ -77,7 +77,7 @@ class Main extends Component {
 }
 
 const mapStateToProps = state => ({
-  mods: state.mods,
+  mods: state.mods.list,
   jobs: state.jobs,
   install: state.install,
   status: state.status,
