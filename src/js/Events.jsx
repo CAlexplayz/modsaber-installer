@@ -5,6 +5,7 @@ import { ipcRenderer } from './utils/electron'
 import { setInstall } from './actions/installActions'
 import { setMods } from './actions/modsActions'
 import { setGameVersions } from './actions/gameVersionsActions'
+import { enqueueJob, dequeueJob } from './actions/jobsActions'
 import { setStatus, setStatusType, setStatusText } from './actions/statusActions'
 
 import {
@@ -38,13 +39,11 @@ class Events extends Component {
       this.props.setStatus(STATUS_LOADED, STATUS_TEXT_LOADED)
       this.props.setGameVersions(gameVersions)
       this.props.setMods(gvIdx, mods)
+    })
 
-      // return this.setState({
-      //   statusText: STATUS_TEXT_LOADED,
-      //   status: STATUS_LOADED,
-      //   rawMods: mods,
-      //   gameVersions,
-      // }, () => { this.filterMods(gvIdx) })
+    ipcRenderer.on('queue-job', async (_, { id, task, noonce }) => {
+      const resp = await (task === 'enqueue' ? this.props.enqueueJob(id) : this.props.dequeueJob(id))
+      ipcRenderer.send('queue-job-resp', { id: resp, noonce })
     })
   }
 
@@ -71,4 +70,6 @@ export default connect(mapStateToProps, {
   setInstall,
   setMods,
   setGameVersions,
+  enqueueJob,
+  dequeueJob,
 })(Events)

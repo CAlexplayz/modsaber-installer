@@ -1,13 +1,7 @@
 import { SET_JOBS, ENQUEUE_JOB, DEQUEUE_JOB } from '../actions/types.js'
 
 /**
- * @typedef {Object} Job
- * @property {string} id
- * @property {string} noonce
- */
-
-/**
- * @typedef {Job[]} State
+ * @typedef {string[]} State
  */
 
 /**
@@ -16,7 +10,7 @@ import { SET_JOBS, ENQUEUE_JOB, DEQUEUE_JOB } from '../actions/types.js'
 
 /**
  * @param {State} state State
- * @param {{ type: ActionType, payload: (Job|Job[]) }} action Action
+ * @param {{ type: ActionType, payload: (string|string[]) }} action Action
  * @returns {State}
  */
 const reducer = (state = [], action) => {
@@ -26,7 +20,7 @@ const reducer = (state = [], action) => {
     case ENQUEUE_JOB:
       return [...state, action.payload]
     case DEQUEUE_JOB:
-      return state.filter(x => x.id !== action.payload.id)
+      return state.filter(x => x !== action.payload)
     default:
       return state
   }
