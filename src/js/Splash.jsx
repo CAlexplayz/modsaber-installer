@@ -1,7 +1,7 @@
 import React from 'react'
 import Icon from '../img/icon.png'
 
-const Loading = () =>
+const Splash = () =>
   <div style={{
     display: 'flex',
     flexDirection: 'column',
@@ -18,4 +18,4 @@ const Loading = () =>
     </div>
   </div>
 
-export default Loading
+export default Splash

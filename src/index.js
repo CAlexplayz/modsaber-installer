@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './js/App.jsx'
-import Loading from './js/Loading.jsx'
+import Splash from './js/Loading.jsx'
 import { ControllerProvider } from './js/Context.jsx'
 
 import '@lolpants/bulma/css/bulma.css'
@@ -16,7 +16,7 @@ import { getCurrentWindow } from './js/utils/electron'
 const loading = getCurrentWindow().custom.ROLE === 'WINDOW_LOADING'
 
 const Root = () => loading ?
-  <Loading /> :
+  <Splash /> :
   <ControllerProvider>
     <App />
   </ControllerProvider>
