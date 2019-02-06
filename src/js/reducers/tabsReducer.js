@@ -17,6 +17,14 @@ import { SET_TABS_MAX, SET_CURRENT_TAB, INCREMENT_TAB_IDX, DECREMENT_TAB_IDX } f
  */
 const reducer = (state, action) => {
   switch (action.type) {
+    case SET_TABS_MAX:
+      return { ...state, max: action.payload }
+    case SET_CURRENT_TAB:
+      return { ...state, current: action.payload }
+    case INCREMENT_TAB_IDX:
+      return { ...state, current: Math.min(state.current + 1, state.max) }
+    case DECREMENT_TAB_IDX:
+      return { ...state, current: Math.max(state.current - 1, 0) }
     default:
       return state
   }

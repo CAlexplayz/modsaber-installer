@@ -15,6 +15,10 @@ import { SET_CONTAINER, CLEAR_CONTAINER } from '../actions/types.js'
  */
 const reducer = (state, action) => {
   switch (action.type) {
+    case SET_CONTAINER:
+      return action.payload
+    case CLEAR_CONTAINER:
+      return undefined
     default:
       return state
   }

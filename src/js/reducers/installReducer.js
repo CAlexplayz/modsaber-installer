@@ -1,7 +1,9 @@
 import { SET_INSTALL_PATH, SET_INSTALL_PLATFORM } from '../actions/types.js'
 
 /**
- * @typedef {string} State
+ * @typedef {Object} State
+ * @property {string} path
+ * @property {string} platform
  */
 
 /**
@@ -15,6 +17,10 @@ import { SET_INSTALL_PATH, SET_INSTALL_PLATFORM } from '../actions/types.js'
  */
 const reducer = (state, action) => {
   switch (action.type) {
+    case SET_INSTALL_PATH:
+      return { ...state, path: action.payload }
+    case SET_INSTALL_PLATFORM:
+      return { ...state, platform: action.payload }
     default:
       return state
   }

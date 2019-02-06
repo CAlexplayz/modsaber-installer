@@ -15,6 +15,8 @@ import { SET_GAME_VERSIONS } from '../actions/types.js'
  */
 const reducer = (state, action) => {
   switch (action.type) {
+    case SET_GAME_VERSIONS:
+      return action.payload
     default:
       return state
   }
