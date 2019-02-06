@@ -1,13 +1,10 @@
 import React, { Component } from 'react'
 
-import Context from './Context.jsx'
 import PathPicker from './components/PathPicker.jsx'
 import MainTabs from './components/MainTabs.jsx'
 import BottomBar from './components/BottomBar.jsx'
 
 class App extends Component {
-  static contextType = Context
-
   render () {
     return (
       <div className='layout'>

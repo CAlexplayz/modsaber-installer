@@ -1,8 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import App from './js/App.jsx'
+import App from './js/App'
+import Events from './js/Events'
 import Splash from './js/Splash'
-import { ControllerProvider } from './js/Context.jsx'
+import { Provider } from 'react-redux'
+import { store } from './js/store'
 
 import '@lolpants/bulma/css/bulma.css'
 import '@fortawesome/fontawesome-free/css/all.css'
@@ -17,9 +19,10 @@ const loading = getCurrentWindow().custom.ROLE === 'WINDOW_LOADING'
 
 const Root = () => loading ?
   <Splash /> :
-  <ControllerProvider>
-    <App />
-  </ControllerProvider>
+  <Provider store={ store }>
+    <Events>
+      <App />
+    </Events>
+  </Provider>
 
-ReactDOM.render(<Root/>, document.getElementById('root')
-)
+ReactDOM.render(<Root/>, document.getElementById('root'))
