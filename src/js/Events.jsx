@@ -35,6 +35,8 @@ class Events extends Component {
       this.props.setStatus(STATUS_LOADED, STATUS_TEXT_LOADED)
       this.props.setGameVersions(gameVersions)
       this.props.setMods(gvIdx, mods)
+
+      return undefined
     })
 
     ipcRenderer.on('queue-job', async (_, { id, task, noonce }) => {

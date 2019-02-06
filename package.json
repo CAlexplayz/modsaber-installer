@@ -52,7 +52,10 @@
     "ship-electron": "electron-builder -c.extraMetadata.main=build/electron.js --win -p always",
     "pack": "npm run build-client && npm run pack-electron",
     "build": "npm run build-client && npm run build-electron",
-    "ship": "npm run build-client && npm run ship-electron"
+    "ship": "npm run build-client && npm run ship-electron",
+    "lint-electron": "",
+    "lint-react": "eslint --ext .js --ext .jsx src/",
+    "lint": "npm run lint-react && npm run lint-electron"
   },
   "build": {
     "appId": "com.jackbaron.modsaber-installer",
