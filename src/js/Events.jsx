@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { ipcRenderer } from './utils/electron'
 
 import { setInstall } from './actions/installActions'
-import { setMods } from './actions/modsActions'
+import { setMods, toggleMod } from './actions/modsActions'
 import { setGameVersions } from './actions/gameVersionsActions'
 import { enqueueJob, dequeueJob } from './actions/jobsActions'
 import { setStatus, setStatusType, setStatusText } from './actions/statusActions'
@@ -45,6 +45,16 @@ class Events extends Component {
       const resp = await (task === 'enqueue' ? this.props.enqueueJob(id) : this.props.dequeueJob(id))
       ipcRenderer.send('queue-job-resp', { id: resp, noonce })
     })
+
+    window.addEventListener('keydown', ev => {
+      if (ev.key !== ' ') return undefined
+      if (this.props.selected === null) return undefined
+
+      this.props.toggleMod(this.props.selected)
+
+      ev.preventDefault()
+      return false
+    })
   }
 
   componentDidMount () {
@@ -55,12 +65,14 @@ class Events extends Component {
   }
 
   render () {
-    return this.props.children
+    return (
+      this.props.children
+    )
   }
 }
 
 const mapStateToProps = state => ({
-
+  selected: state.mods.selected,
 })
 
 export default connect(mapStateToProps, {
@@ -69,6 +81,7 @@ export default connect(mapStateToProps, {
   setStatusText,
   setInstall,
   setMods,
+  toggleMod,
   setGameVersions,
   enqueueJob,
   dequeueJob,
