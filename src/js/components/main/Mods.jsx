@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 import Helmet from 'react-helmet'
 import Context from '../../Context.jsx'
 
-import * as c from '../../constants.js'
+import { CATEGORY_DEFAULT } from '../../constants'
 
 import '../../../css/scrollbar.css'
 import '../../../css/table.css'
@@ -27,7 +27,7 @@ class Mods extends Component {
       const mod = mods[index]
       mod.index = index
 
-      const other = c.CATEGORY_DEFAULT
+      const other = CATEGORY_DEFAULT
       const category = mod.meta.category
 
       if (!categories.find(x => x.name === category)) categories.push({ name: category, weight: 0, mods: [] })

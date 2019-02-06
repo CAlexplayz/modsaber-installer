@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Context from '../Context.jsx'
 
-import { STATUS_LOADING, STATUS_OFFLINE } from '../constants.js'
+import { STATUS_LOADING, STATUS_OFFLINE } from '../constants'
 
 /**
  * @type {Electron}

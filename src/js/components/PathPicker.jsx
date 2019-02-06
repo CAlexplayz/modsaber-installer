@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Context from '../Context.jsx'
 
-import * as c from '../constants.js'
+import { STATUS_LOADING, STATUS_OFFLINE } from '../constants'
 
 /**
  * @type {Electron}
@@ -84,8 +84,8 @@ class PathPicker extends Component {
         <div className='select' style={{ marginLeft: '10px' }} onChange={ e => { this.switchVersion(JSON.parse(e.target.value)) } }>
           <select disabled={
             this.context.jobs.length > 0 ||
-            this.context.status === c.STATUS_LOADING ||
-            this.context.status === c.STATUS_OFFLINE
+            this.context.status === STATUS_LOADING ||
+            this.context.status === STATUS_OFFLINE
           }>
             { this.context.gameVersions.map((gv, i) =>
               <option value={ JSON.stringify(gv) } selected={ gv.selected } key={ i }>

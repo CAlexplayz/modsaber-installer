@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import Helmet from 'react-helmet'
 import Context from '../../Context.jsx'
 import { openLog, uploadLog } from '../../utils/logs.js'
-import * as c from '../../constants.js'
+
+import { STATUS_LOADING } from '../../constants/index.js'
 
 /**
  * @type {Electron}
@@ -20,7 +21,7 @@ class Tools extends Component {
 
   render () {
     const working = this.context.jobs.length > 0
-    const disabled = working || this.context.status === c.STATUS_LOADING
+    const disabled = working || this.context.status === STATUS_LOADING
 
     return (
       <>

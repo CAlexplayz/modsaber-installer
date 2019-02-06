@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Helmet from 'react-helmet'
 
-import * as c from '../../constants.js'
+import { AUTO_UPDATE_JOB, STATUS_LOADING, STATUS_TEXT_LOADING, STATUS_OFFLINE } from '../../constants'
 
 import Context from '../../Context.jsx'
 import Status from './Status.jsx'
@@ -24,13 +24,13 @@ class Main extends Component {
   static contextType = Context
 
   render () {
-    if (this.context.jobs.length > 0 || this.context.status === c.STATUS_LOADING) {
+    if (this.context.jobs.length > 0 || this.context.status === STATUS_LOADING) {
       return (
         <>
           <Status spin>
             {
-              this.context.jobs.includes(c.AUTO_UPDATE_JOB) ? 'Updating Installer' :
-                this.context.status === c.STATUS_LOADING ?
+              this.context.jobs.includes(AUTO_UPDATE_JOB) ? 'Updating Installer' :
+                this.context.status === STATUS_LOADING ?
                   'Loading' :
                   'Working'
             }...
@@ -56,7 +56,7 @@ class Main extends Component {
       )
     }
 
-    if (this.context.status === c.STATUS_OFFLINE) {
+    if (this.context.status === STATUS_OFFLINE) {
       return (
         <Status icon='fas fa-exclamation-triangle'>
           Connection Error<br />
@@ -64,8 +64,8 @@ class Main extends Component {
             e.preventDefault()
             ipcRenderer.send('get-remote')
 
-            this.context.setStatus(c.STATUS_LOADING)
-            this.context.setStatusText(c.STATUS_TEXT_LOADING)
+            this.context.setStatus(STATUS_LOADING)
+            this.context.setStatusText(STATUS_TEXT_LOADING)
           } }>
             Retry
           </a>
