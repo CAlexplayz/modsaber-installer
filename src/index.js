@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './js/App.jsx'
-import Splash from './js/Loading.jsx'
+import Splash from './js/Splash'
 import { ControllerProvider } from './js/Context.jsx'
 
 import '@lolpants/bulma/css/bulma.css'
