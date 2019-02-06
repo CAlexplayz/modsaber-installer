@@ -4,6 +4,9 @@ import rootReducer from './reducers'
 
 import { STATUS_TEXT_IDLE, STATUS_LOADING } from './constants/statuses'
 
+/**
+ * @type {typeof import('electron-store')}
+ */
 const ElectronStore = window.require('electron-store')
 const electronStore = new ElectronStore()
 
