@@ -108,7 +108,7 @@ const modKey = (mod = { name: 'Unknown', version: '?.?.?' }) =>
 
 const checkMod: (mod: IMod, mods: IMod[]) => IMod[] = (mod, mods) => {
   try {
-    const depKeys = findLinks(mod, mods, 'dependencies', true)
+    const depKeys = findLinks(mod, mods, 'dependencies', true) as string[]
     for (const key of depKeys) {
       const [name, version] = key.split('@')
       const depMod = mods.find(x => x.name === name && x.version === version)
@@ -133,7 +133,7 @@ const checkMod: (mod: IMod, mods: IMod[]) => IMod[] = (mod, mods) => {
     return mods
   }
 
-  const conflicts = findLinks(mod, mods, 'conflicts', true)
+  const conflicts = findLinks(mod, mods, 'conflicts', true) as string[]
   for (const conflictKey of conflicts) {
     const [name, version] = conflictKey.split('@')
     const conflict = mods.find(x => x.name === name && x.version === version)
@@ -193,7 +193,7 @@ const findLinks: (
   mods: IMod[],
   type: SearchType,
   keys?: boolean
-) => string[] = (mod, mods, type, keys = false) => {
+) => string[] | IMod[] = (mod, mods, type, keys = false) => {
   const modsClone: IMod[] = JSON.parse(JSON.stringify(mods))
 
   const links =
@@ -203,12 +203,14 @@ const findLinks: (
   )
 
   if (keys) return recursiveSearch
-  return recursiveSearch
+  const final = recursiveSearch
     .map(key => {
       const [name, version] = key.split('@')
       return modsClone.find(x => x.name === name && x.version === version)
     })
     .filter(x => x !== undefined)
+
+  return final as IMod[]
 }
 
 const findLinksR: (
