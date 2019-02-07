@@ -22,7 +22,7 @@
     "jsx-curly-spacing": "never",
     "jsx-no-lambda": false,
     "jsx-alignment": true,
-    "curly": [true, "multi-line", "consistent"],
+    "curly": [true, "ignore-same-line"],
     "no-invalid-this": true,
     "prettier": true
   },
