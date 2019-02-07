@@ -12,10 +12,16 @@ import './css/dark.css'
 import './css/styles.css'
 import './css/tools.css'
 
-import './js/shortcuts.js'
+import './js/shortcuts'
+
+export interface IWindow extends Electron.BrowserWindow {
+  custom: {
+    ROLE: string
+  }
+}
 
 import { getCurrentWindow } from './js/utils/electron'
-const loading = getCurrentWindow().custom.ROLE === 'WINDOW_LOADING'
+const loading = (getCurrentWindow() as IWindow).custom.ROLE === 'WINDOW_LOADING'
 
 const Root = () =>
   loading ? (
