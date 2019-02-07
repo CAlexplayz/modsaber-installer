@@ -11,7 +11,7 @@ const reducer: Reducer<IThemeState> = (state = 'light', action) => {
 
     return theme
   } else if (action.type === ThemeActionTypes.LOAD_THEME) {
-    const theme = electronStore.get('theme')
+    const theme = electronStore.get('theme') || 'light'
     setTheme(theme)
 
     return theme
