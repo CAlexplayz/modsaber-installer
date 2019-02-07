@@ -1,6 +1,6 @@
 import Mousetrap from 'mousetrap'
 import { ipcRenderer } from './utils/electron'
-import { openLog, uploadLog } from './utils/logs.js'
+import { openLog, uploadLog } from './utils/logs'
 
 // Open log file
 Mousetrap.bind('ctrl+shift+k', () => openLog())
