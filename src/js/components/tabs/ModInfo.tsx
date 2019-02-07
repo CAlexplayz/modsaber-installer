@@ -3,6 +3,7 @@ import Helmet from 'react-helmet'
 import { connect } from 'react-redux'
 
 import { IMod } from '../../models/modsaber'
+import { IState } from '../../store'
 import MarkdownRenderer from '../Markdown'
 
 interface IProps {
@@ -26,8 +27,8 @@ const ModInfo: React.FunctionComponent<IProps> = ({ mod }) => (
   </>
 )
 
-const mapStateToProps = state => ({
-  mod: state.mods.list[state.mods.selected],
+const mapStateToProps: (state: IState) => IProps = state => ({
+  mod: state.mods.list[state.mods.selected as number],
 })
 
 export default connect(mapStateToProps)(ModInfo)

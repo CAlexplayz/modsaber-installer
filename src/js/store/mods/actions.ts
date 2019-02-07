@@ -1,4 +1,3 @@
-import { dialog, remote } from 'electron'
 import { Dispatch } from 'redux'
 import semver from 'semver'
 import { IState } from '..'
@@ -8,9 +7,8 @@ import {
   MODS_REQUIRED,
 } from '../../constants'
 import { IMod } from '../../models/modsaber'
+import { dialog, getCurrentWindow } from '../../utils/electron'
 import { ModsActionTypes } from './types'
-
-const getCurrentWindow = remote.getCurrentWindow
 
 export const setModsRaw: (
   raw: IMod[]

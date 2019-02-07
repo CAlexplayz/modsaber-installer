@@ -1,12 +1,12 @@
 /**
- * @type {Electron}
+ * @type {import('electron')}
  */
 const electron = window.require('electron')
 
-/**
- * @type {typeof import('electron-store')}
- */
 const Store = window.require('electron-store')
+/**
+ * @type {Map}
+ */
 const store = new Store()
 
 export default electron
