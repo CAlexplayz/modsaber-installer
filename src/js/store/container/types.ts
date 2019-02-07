@@ -3,4 +3,4 @@ export enum ContainerActionTypes {
   CLEAR_CONTAINER = '@@container/CLEAR_CONTAINER',
 }
 
-export type IContainerState = React.RefObject<HTMLDivElement> | null
+export type IContainerState = HTMLDivElement | null

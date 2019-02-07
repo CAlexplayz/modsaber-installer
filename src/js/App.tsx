@@ -1,8 +1,8 @@
 import React from 'react'
 
-import BottomBar from './components/BottomBar.jsx'
-import MainTabs from './components/MainTabs.jsx'
-import PathPicker from './components/PathPicker.jsx'
+import BottomBar from './components/BottomBar'
+import MainTabs from './components/MainTabs'
+import PathPicker from './components/PathPicker'
 
 const App = () => (
   <div className='layout'>

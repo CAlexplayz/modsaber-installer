@@ -2,10 +2,10 @@ import { Dispatch } from 'redux'
 import { ContainerActionTypes, IContainerState } from './types'
 
 export const setContainer: (
-  container: IContainerState
+  container: React.RefObject<IContainerState>
 ) => (dispatch: Dispatch) => void = container => dispatch => {
   dispatch({
-    payload: container,
+    payload: container.current,
     type: ContainerActionTypes.SET_CONTAINER,
   })
 }
