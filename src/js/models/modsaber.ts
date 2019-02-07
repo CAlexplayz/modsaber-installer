@@ -43,4 +43,9 @@ export interface IMod {
     steam: IFiles
     oculus?: IFiles
   }
+  install: {
+    conflictsWith: string[]
+    requiredBy: string[]
+    selected: boolean
+  }
 }
