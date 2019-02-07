@@ -1,9 +1,9 @@
 import React from 'react'
 
 interface IProps {
-  icon: string
-  children: string | JSX.Element | JSX.Element[]
-  spin: boolean
+  icon?: string
+  children: React.ReactNode
+  spin?: boolean
 }
 
 const Status: React.FunctionComponent<IProps> = props => (

@@ -2,7 +2,7 @@ import React from 'react'
 import { shell } from '../utils/electron'
 
 interface IProps {
-  children: string | JSX.Element | JSX.Element[]
+  children: React.ReactNode
   href: string
 }
 
