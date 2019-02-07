@@ -63,8 +63,8 @@
     "pack": "npm run build-client && npm run pack-electron",
     "build": "npm run build-client && npm run build-electron",
     "ship": "npm run build-client && npm run ship-electron",
-    "lint-electron": "",
-    "lint-react": "eslint --ext .js --ext .jsx src/",
+    "lint-electron": "eslint --color --ext .js public/",
+    "lint-react": "tslint -c tslint.json 'src/**/*.{ts,tsx}'",
     "lint": "npm run lint-react && npm run lint-electron"
   },
   "build": {
