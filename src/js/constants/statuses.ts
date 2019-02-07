@@ -1,11 +1,15 @@
 // Status Text
-export const STATUS_TEXT_IDLE = 'Idle'
-export const STATUS_TEXT_LOADING = 'Loading mods...'
-export const STATUS_TEXT_OFFLINE = 'Could not connect to ModSaber'
-export const STATUS_TEXT_LOADED = 'Mod list loaded'
-export const STATUS_TEXT_PIRATED = 'Pirated copy detected'
+export enum Status {
+  LOADING = 'loading',
+  LOADED = 'loaded',
+  OFFLINE = 'offline',
+}
 
 // Statuses
-export const STATUS_LOADING = 'loading'
-export const STATUS_OFFLINE = 'offline'
-export const STATUS_LOADED = 'loaded'
+export enum StatusText {
+  IDLE = 'Idle',
+  LOADING = 'Loading mods...',
+  OFFLINE = 'Could not connect to ModSaber',
+  LOADED = 'Mod list loaded',
+  PIRATED = 'Pirated copy detected',
+}
