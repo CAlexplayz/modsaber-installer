@@ -22,6 +22,3 @@ export const SET_TABS_MAX         = 'SET_TABS_MAX'
 export const SET_CURRENT_TAB      = 'SET_CURRENT_TAB'
 export const INCREMENT_TAB_IDX    = 'INCREMENT_TAB_IDX'
 export const DECREMENT_TAB_IDX    = 'DECREMENT_TAB_IDX'
-
-export const SET_CONTAINER        = 'SET_CONTAINER'
-export const CLEAR_CONTAINER      = 'CLEAR_CONTAINER'
