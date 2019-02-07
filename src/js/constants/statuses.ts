@@ -1,5 +1,3 @@
-/* eslint no-multi-spaces: off */
-
 // Status Text
 export const STATUS_TEXT_IDLE = 'Idle'
 export const STATUS_TEXT_LOADING = 'Loading mods...'
