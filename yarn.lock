@@ -8577,7 +8577,7 @@ prompts@^0.1.9:
     kleur "^2.0.1"
     sisteransi "^0.1.1"
 
-prop-types@>=15.5.8, prop-types@^15.5.4, prop-types@^15.6.1, prop-types@^15.6.2:
+prop-types@^15.5.4, prop-types@^15.6.1, prop-types@^15.6.2:
   version "15.6.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.2.tgz#05d5ca77b4453e985d60fc7ff8c859094a497102"
   integrity sha512-3pboPvLiWD7dkI3qf3KbUe6hKFKa52w+AE0VCqECtf+QHAKgOL37tTaNCnuX1nAAQ4ZhyP+kYVKf8rLmJ/feDQ==
@@ -8787,7 +8787,7 @@ react-dev-utils@^7.0.1:
     strip-ansi "4.0.0"
     text-table "0.2.0"
 
-react-dom@^16.8.1:
+react-dom@^16.3.1, react-dom@^16.8.1:
   version "16.8.1"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.8.1.tgz#ec860f98853d09d39bafd3a6f1e12389d283dbb4"
   integrity sha512-N74IZUrPt6UiDjXaO7UbDDFXeUXnVhZzeRLy/6iqqN1ipfjrhR60Bp5NuBK+rv3GMdqdIuwIl22u1SYwf330bg==
@@ -8824,13 +8824,13 @@ react-is@^16.6.3, react-is@^16.7.0:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.8.1.tgz#a80141e246eb894824fb4f2901c0c50ef31d4cdb"
   integrity sha512-ioMCzVDWvCvKD8eeT+iukyWrBGrA3DiFYkXfBsVYIRdaREZuBjENG+KjrikavCLasozqRWTwFUagU/O4vPpRMA==
 
-react-konami@^0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/react-konami/-/react-konami-0.5.0.tgz#f24307a6fcd9e095599e64f87be61630fe6585cd"
-  integrity sha512-z8jSYVIwN3V9N/HXG8PCgvgFNpxj1dyXZBR83vBaiF9Pru8peOqxFfAW2bbX+NtgjhF204rBqXoptpKH87ocrQ==
+react-konami-code@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/react-konami-code/-/react-konami-code-1.4.0.tgz#5b6508bcc57e91a02f696451c11f0873caaa8dce"
+  integrity sha512-kdPDfPNcNpYQzKiBy2NAYLYQuzUmxYqEEmGJcK4I1I4jCgIFthACEdkWPBQOFD1R8DBP8pLZAgdkMm3WpDjo9Q==
   dependencies:
-    prop-types ">=15.5.8"
-    react ">=15.3.0"
+    react "^16.3.1"
+    react-dom "^16.3.1"
 
 react-markdown@^4.0.6:
   version "4.0.6"
@@ -8920,7 +8920,7 @@ react-side-effect@^1.1.0:
     exenv "^1.2.1"
     shallowequal "^1.0.1"
 
-react@>=15.3.0, react@^16.8.1:
+react@^16.3.1, react@^16.8.1:
   version "16.8.1"
   resolved "https://registry.yarnpkg.com/react/-/react-16.8.1.tgz#ae11831f6cb2a05d58603a976afc8a558e852c4a"
   integrity sha512-wLw5CFGPdo7p/AgteFz7GblI2JPOos0+biSoxf1FPsGxWQZdN/pj6oToJs1crn61DL3Ln7mN86uZ4j74p31ELQ==
