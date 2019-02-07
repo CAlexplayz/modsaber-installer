@@ -61,7 +61,7 @@
     "dev": "electron . --debug",
     "start": "npm run start-react",
     "start-react": "cross-env BROWSER=none react-scripts start",
-    "build-react": "react-scripts build",
+    "build-react": "cross-env GENERATE_SOURCEMAP=false react-scripts build",
     "pack-electron": "electron-builder -c.extraMetadata.main=build/electron.js --dir",
     "build-electron": "electron-builder -c.extraMetadata.main=build/electron.js --win",
     "ship-electron": "electron-builder -c.extraMetadata.main=build/electron.js --win -p always",
