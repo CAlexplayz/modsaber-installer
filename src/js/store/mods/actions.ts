@@ -4,6 +4,7 @@ import { IState } from '..'
 import {
   CATEGORY_DEFAULT,
   ERR_NOT_SATISFIED,
+  MODS_DEFAULT,
   MODS_REQUIRED,
 } from '../../constants'
 import { IMod } from '../../models/modsaber'
@@ -62,13 +63,14 @@ export const setMods: (
       mod.meta.category = mod.meta.category || CATEGORY_DEFAULT
       return mod
     })
-    .map(mod => {
+    .map((mod, idx) => {
       mod.install = {
         conflictsWith: [],
         requiredBy: MODS_REQUIRED.includes(mod.name) ? ['global'] : [],
         selected: false,
       }
 
+      mod.index = idx
       return mod
     })
 
@@ -76,6 +78,16 @@ export const setMods: (
     payload: mods,
     type: ModsActionTypes.SET_MODS_LIST,
   })
+
+  dispatch({
+    payload: null,
+    type: ModsActionTypes.SET_SELECTED_MOD,
+  })
+
+  mods
+    .filter(x => MODS_DEFAULT.includes(x.name))
+    .map(x => x.index)
+    .forEach(idx => toggleMod(idx)(dispatch, getState))
 }
 
 export const toggleMod: (
