@@ -1,17 +1,20 @@
 import { Reducer } from 'redux'
+import { electronStore } from '../../utils/electron'
 import { IThemeState, ThemeActionTypes } from './types'
-
-//TODO: Add store
 
 const reducer: Reducer<IThemeState> = (state = 'light', action) => {
   if (action.type === ThemeActionTypes.SET_THEME) {
     const theme = state === 'light' ? 'dark' : 'light'
 
     setTheme(theme)
+    electronStore.set('theme', theme)
 
     return theme
   } else if (action.type === ThemeActionTypes.LOAD_THEME) {
-    return state
+    const theme = electronStore.get('theme')
+    setTheme(theme)
+
+    return theme
   } else {
     return state
   }

@@ -9,7 +9,7 @@ import { IInstallState, setInstall } from './store/install'
 import { dequeueJob, enqueueJob } from './store/jobs'
 import { setMods, toggleMod } from './store/mods'
 import { setStatus, setStatusText, setStatusType } from './store/status'
-import { toggleTheme } from './store/theme'
+import { loadTheme, toggleTheme } from './store/theme'
 
 import { Status, StatusText } from './constants'
 import { IGameVersion, IMod } from './models/modsaber'
@@ -19,6 +19,7 @@ interface IProps {
 
   dequeueJob: typeof dequeueJob
   enqueueJob: typeof enqueueJob
+  loadTheme: typeof loadTheme
   setGameVersions: typeof setGameVersions
   setInstall: typeof setInstall
   setMods: typeof setMods
@@ -109,6 +110,7 @@ class Events extends Component<IProps> {
     ipcRenderer.send('get-path')
     ipcRenderer.send('get-remote')
 
+    this.props.loadTheme()
     this.props.setStatusText(StatusText.LOADING)
   }
 
@@ -128,6 +130,7 @@ const mapStateToProps: (state: IState) => IProps = state => ({
 
   dequeueJob,
   enqueueJob,
+  loadTheme,
   setGameVersions,
   setInstall,
   setMods,
@@ -143,6 +146,7 @@ export default connect(
   {
     dequeueJob,
     enqueueJob,
+    loadTheme,
     setGameVersions,
     setInstall,
     setMods,
