@@ -4,7 +4,7 @@ import { Provider } from 'react-redux'
 import App from './js/App'
 import Events from './js/Events'
 import Splash from './js/Splash'
-import { store } from './js/store'
+import { store } from './js/store/index'
 
 import '@fortawesome/fontawesome-free/css/all.css'
 import '@lolpants/bulma/css/bulma.css'

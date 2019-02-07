@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { ipcRenderer, dialog, getCurrentWindow } from '../utils/electron'
 
-import { setMods } from '../actions/modsActions'
-import { setGameVersions } from '../actions/gameVersionsActions'
-import { STATUS_LOADING, STATUS_OFFLINE } from '../constants'
+import { setMods } from '../store/mods'
+import { setGameVersions } from '../store/gameVersions'
+import { Status } from '../constants'
 
 class PathPicker extends Component {
   componentDidMount () {
@@ -78,8 +78,8 @@ class PathPicker extends Component {
         <div className='select' style={{ marginLeft: '10px' }} onChange={ e => { this.switchVersion(JSON.parse(e.target.value)) } }>
           <select disabled={
             this.props.jobs.length > 0 ||
-            this.props.status === STATUS_LOADING ||
-            this.props.status === STATUS_OFFLINE
+            this.props.status === Status.LOADING ||
+            this.props.status === Status.OFFLINE
           }>
             { this.props.gameVersions.map((gv, i) =>
               <option value={ JSON.stringify(gv) } selected={ gv.selected } key={ i }>

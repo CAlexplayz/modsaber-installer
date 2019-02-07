@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { setCurrentTab, setMaxTabs } from '../actions/tabsActions'
-import { setContainer } from '../actions/containerActions'
+import { setCurrentTab, setMaxTabs } from '../store/tabs'
+import { setContainer } from '../store/container'
 
-import Main from './main/Main.jsx'
-import Tools from './tabs/Tools.jsx'
-import Help from './tabs/Help.jsx'
-import Credits from './tabs/Credits.jsx'
-import ModInfo from './tabs/ModInfo.jsx'
+import Main from './main/Main'
+import Tools from './tabs/Tools'
+import Help from './tabs/Help'
+import Credits from './tabs/Credits'
+import ModInfo from './tabs/ModInfo'
 
 class MainTabs extends Component {
   constructor (props) {

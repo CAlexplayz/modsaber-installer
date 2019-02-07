@@ -4,7 +4,7 @@ import Highlight from 'react-highlight'
 import PropTypes from 'prop-types'
 
 import 'highlight.js/styles/atom-one-light.css'
-import ExtLink from './ExtLink.jsx'
+import ExtLink from './ExtLink'
 
 const MarkdownRenderer = props =>
   <ReactMarkdown

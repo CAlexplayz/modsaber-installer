@@ -3,19 +3,14 @@ import Konami from 'react-konami'
 import { connect } from 'react-redux'
 import { ipcRenderer } from './utils/electron'
 
-import { toggleTheme } from './actions/themeActions'
-import { setInstall } from './actions/installActions'
-import { setMods, toggleMod } from './actions/modsActions'
-import { setGameVersions } from './actions/gameVersionsActions'
-import { enqueueJob, dequeueJob } from './actions/jobsActions'
-import { setStatus, setStatusType, setStatusText } from './actions/statusActions'
+import { toggleTheme } from './store/theme'
+import { setInstall } from './store/install'
+import { setMods, toggleMod } from './store/mods'
+import { setGameVersions } from './store/gameVersions'
+import { enqueueJob, dequeueJob } from './store/jobs'
+import { setStatus, setStatusType, setStatusText } from './store/status'
 
-import {
-  STATUS_LOADED,
-  STATUS_OFFLINE,
-  STATUS_TEXT_LOADING,
-  STATUS_TEXT_LOADED,
-} from './constants'
+import { Status, StatusText } from './constants'
 
 class Events extends Component {
   constructor (props) {
@@ -28,11 +23,11 @@ class Events extends Component {
 
     ipcRenderer.on('set-path', (_, install) => this.props.setInstall(install))
     ipcRenderer.on('set-remote', (_, { status, statusText, mods, gameVersions }) => {
-      if (status === 'error') return this.props.setStatus({ statusText, status: STATUS_OFFLINE })
+      if (status === 'error') return this.props.setStatus({ statusText, status: Status.OFFLINE })
 
       const gvIdx = gameVersions.findIndex(x => x.selected)
 
-      this.props.setStatus(STATUS_LOADED, STATUS_TEXT_LOADED)
+      this.props.setStatus(Status.LOADED, StatusText.LOADED)
       this.props.setGameVersions(gameVersions)
       this.props.setMods(gvIdx, mods)
 
@@ -59,7 +54,7 @@ class Events extends Component {
     ipcRenderer.send('get-path')
     ipcRenderer.send('get-remote')
 
-    this.props.setStatusText(STATUS_TEXT_LOADING)
+    this.props.setStatusText(StatusText.LOADING)
   }
 
   render () {

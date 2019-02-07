@@ -1,5 +1,5 @@
 import React from 'react'
-import ExtLink from '../ExtLink.jsx'
+import ExtLink from '../ExtLink'
 
 const Help = () => (
   <div className='content'>

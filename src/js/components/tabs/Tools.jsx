@@ -2,15 +2,15 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Helmet from 'react-helmet'
 import { ipcRenderer } from '../../utils/electron'
-import { openLog, uploadLog } from '../../utils/logs.js'
+import { openLog, uploadLog } from '../../utils/logs'
 
-import { toggleTheme } from '../../actions/themeActions'
-import { STATUS_LOADING } from '../../constants/index.js'
+import { toggleTheme } from '../../store/theme'
+import { Status } from '../../constants'
 
 class Tools extends Component {
   render () {
     const working = this.props.jobs.length > 0
-    const disabled = working || this.props.status.type === STATUS_LOADING
+    const disabled = working || this.props.status.type === Status.LOADING
 
     return (
       <>

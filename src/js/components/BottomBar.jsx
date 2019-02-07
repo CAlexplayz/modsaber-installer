@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { shell } from '../utils/electron'
 
-import { setCurrentTab, setMaxTabs } from '../actions/tabsActions'
-import { STATUS_LOADING, STATUS_OFFLINE } from '../constants'
+import { setCurrentTab, setMaxTabs } from '../store/tabs'
+import { Status } from '../constants'
 
 class BottomBar extends Component {
   handleModInfo () {
@@ -18,7 +18,7 @@ class BottomBar extends Component {
     return (
       <>
         <span className='status'>
-          { this.props.status.type === STATUS_OFFLINE ? 'Error' : 'Status' }: { this.props.status.text }
+          { this.props.status.type === Status.OFFLINE ? 'Error' : 'Status' }: { this.props.status.text }
         </span>
 
         <button
@@ -36,7 +36,7 @@ class BottomBar extends Component {
               className={ `button${this.props.jobs.length > 0 ? ' is-loading' : ''}` }
               disabled={
                 this.props.jobs.length > 0 ||
-                this.props.status.type === STATUS_LOADING ||
+                this.props.status.type === Status.LOADING ||
                 this.props.mods.length === 0
               }
               onClick={ () => { this.context.installMods() } }

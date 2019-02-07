@@ -3,11 +3,11 @@ import { connect } from 'react-redux'
 import Helmet from 'react-helmet'
 import { ipcRenderer, shell } from '../../utils/electron'
 
-import { setStatus } from '../../actions/statusActions'
-import { AUTO_UPDATE_JOB, STATUS_LOADING, STATUS_TEXT_LOADING, STATUS_OFFLINE } from '../../constants'
+import { setStatus } from '../../store/status'
+import { AUTO_UPDATE_JOB, Status as StatusType, StatusText } from '../../constants'
 
-import Status from './Status.jsx'
-import Mods from './Mods.jsx'
+import Status from './Status'
+import Mods from './Mods'
 
 const piracyLink = () => {
   const links = [
@@ -20,13 +20,13 @@ const piracyLink = () => {
 
 class Main extends Component {
   render () {
-    if (this.props.jobs.length > 0 || this.props.status.type === STATUS_LOADING) {
+    if (this.props.jobs.length > 0 || this.props.status.type === StatusType.LOADING) {
       return (
         <>
           <Status spin>
             {
               this.props.jobs.includes(AUTO_UPDATE_JOB) ? 'Updating Installer' :
-                this.props.status.type === STATUS_LOADING ?
+                this.props.status.type === StatusType.LOADING ?
                   'Loading' :
                   'Working'
             }...
@@ -52,7 +52,7 @@ class Main extends Component {
       )
     }
 
-    if (this.props.status.type === STATUS_OFFLINE) {
+    if (this.props.status.type === StatusType.OFFLINE) {
       return (
         <Status icon='fas fa-exclamation-triangle'>
           Connection Error<br />
@@ -60,7 +60,7 @@ class Main extends Component {
             e.preventDefault()
             ipcRenderer.send('get-remote')
 
-            this.props.setStatus(STATUS_LOADING, STATUS_TEXT_LOADING)
+            this.props.setStatus(StatusType.LOADING, StatusText.LOADING)
           } }>
             Retry
           </a>
