@@ -116,7 +116,8 @@ class PathPicker extends Component<IProps> {
           className='select'
           style={{ marginLeft: '10px' }}
           onChange={e => {
-            // this.switchVersion(JSON.parse(e.target.value))
+            const target = e.target as HTMLOptionElement
+            this.switchVersion(JSON.parse(target.value) as IGameVersion)
           }}
         >
           <select
