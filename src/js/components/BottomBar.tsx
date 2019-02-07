@@ -7,6 +7,7 @@ import { IMod } from '../models/modsaber'
 import { IState } from '../store'
 import { IContainerState } from '../store/container'
 import { IJobsState } from '../store/jobs'
+import { installMods } from '../store/mods'
 import { IStatusState } from '../store/status'
 import { ITabsState, setCurrentTab, setMaxTabs } from '../store/tabs'
 
@@ -19,6 +20,7 @@ interface IProps {
   status: IStatusState
   tabs: ITabsState
 
+  installMods: typeof installMods
   setCurrentTab: typeof setCurrentTab
   setMaxTabs: typeof setMaxTabs
 }
@@ -68,7 +70,7 @@ class BottomBar extends Component<IProps> {
               this.props.mods.length === 0
             }
             onClick={() => {
-              this.context.installMods()
+              this.props.installMods()
             }}
           >
             Install / Update
@@ -88,11 +90,12 @@ const mapStateToProps: (state: IState) => IProps = state => ({
   status: state.status,
   tabs: state.tabs,
 
+  installMods,
   setCurrentTab,
   setMaxTabs,
 })
 
 export default connect(
   mapStateToProps,
-  { setCurrentTab, setMaxTabs }
+  { installMods, setCurrentTab, setMaxTabs }
 )(BottomBar)

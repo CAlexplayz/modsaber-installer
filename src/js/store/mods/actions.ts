@@ -8,7 +8,7 @@ import {
   MODS_REQUIRED,
 } from '../../constants'
 import { IMod } from '../../models/modsaber'
-import { dialog, getCurrentWindow } from '../../utils/electron'
+import { dialog, getCurrentWindow, ipcRenderer } from '../../utils/electron'
 import { ModsActionTypes } from './types'
 
 export const setModsRaw: (
@@ -90,6 +90,24 @@ export const setMods: (
     .filter(x => MODS_DEFAULT.includes(x.name))
     .map(x => x.index)
     .forEach(idx => toggleMod(idx)(dispatch, getState))
+}
+
+export const installMods: () => (
+  dispatch: Dispatch,
+  getState: () => IState
+) => void = () => (dispatch, getState) => {
+  const {
+    install,
+    gameVersions,
+    mods: { list: mods },
+  } = getState()
+
+  const toInstall = mods.filter(
+    mod => mod.install.selected || mod.install.requiredBy.length > 0 || false
+  )
+
+  const gameVersion = gameVersions.values[gameVersions.selected]
+  ipcRenderer.send('install-mods', { mods: toInstall, install, gameVersion })
 }
 
 export const toggleMod: (

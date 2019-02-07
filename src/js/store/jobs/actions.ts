@@ -29,7 +29,7 @@ export const dequeueJob: (
 ) => (dispatch: Dispatch) => string = id => dispatch => {
   dispatch({
     payload: id,
-    type: JobsActionTypes.ENQUEUE_JOB,
+    type: JobsActionTypes.DEQUEUE_JOB,
   })
 
   return id
