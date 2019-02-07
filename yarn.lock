@@ -966,6 +966,13 @@
   dependencies:
     "@types/react" "*"
 
+"@types/react-highlight@^0.12.1":
+  version "0.12.1"
+  resolved "https://registry.yarnpkg.com/@types/react-highlight/-/react-highlight-0.12.1.tgz#87bb5e5dd8480b5f3915a60fccdea891eb632859"
+  integrity sha512-fygLfWNSzFGJuj75T5HU+rdizium0RiPjNojdxGcesgL5SHjbH3y/eLsOzAfPuk9n/Jd9pIaow7veM6fDKsqzA==
+  dependencies:
+    "@types/react" "*"
+
 "@types/react-redux@^7.0.1":
   version "7.0.1"
   resolved "https://registry.yarnpkg.com/@types/react-redux/-/react-redux-7.0.1.tgz#9dd2503be7a9861c5a092bf1c5050b7ade4dc62e"
