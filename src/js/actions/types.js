@@ -1,8 +1,5 @@
 /* eslint no-multi-spaces: off */
 
-export const SET_THEME            = 'SET_THEME'
-export const LOAD_THEME           = 'LOAD_THEME'
-
 export const SET_STATUS           = 'SET_STATUS'
 export const SET_STATUS_TYPE      = 'SET_STATUS_TYPE'
 export const SET_STATUS_TEXT      = 'SET_STATUS_TEXT'
