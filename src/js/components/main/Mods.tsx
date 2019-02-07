@@ -153,16 +153,16 @@ class Mods extends Component<IProps, ILocalState> {
                             mod.index !== this.props.selected ? '' : 'selected'
                           }
                           onClick={e => {
-                            console.log(e)
-                            // if (e.target.type !== 'i') {
-                            //   this.props.setSelectedMod(mod.index)
-                            // }
+                            const target = e.target as HTMLElement
+                            if (target.nodeName !== 'I') {
+                              this.props.setSelectedMod(mod.index)
+                            }
                           }}
                           onDoubleClick={e => {
-                            console.log(e)
-                            // if (e.target.type !== 'i') {
-                            //   this.props.toggleMod(mod.index)
-                            // }
+                            const target = e.target as HTMLElement
+                            if (target.nodeName !== 'I') {
+                              this.props.toggleMod(mod.index)
+                            }
                           }}
                         >
                           <td
