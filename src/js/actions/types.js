@@ -8,10 +8,6 @@ export const SET_MODS_RAW         = 'SET_MODS_RAW'
 export const SET_MODS_LIST        = 'SET_MODS_LIST'
 export const SET_SELECTED_MOD     = 'SET_SELECTED_MOD'
 
-export const SET_JOBS             = 'SET_JOB'
-export const ENQUEUE_JOB          = 'ENQUEUE_JOB'
-export const DEQUEUE_JOB          = 'DEQUEUE_JOB'
-
 export const SET_TABS_MAX         = 'SET_TABS_MAX'
 export const SET_CURRENT_TAB      = 'SET_CURRENT_TAB'
 export const INCREMENT_TAB_IDX    = 'INCREMENT_TAB_IDX'
