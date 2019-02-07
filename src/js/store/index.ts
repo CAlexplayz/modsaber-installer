@@ -7,6 +7,7 @@ import {
   createStore,
   Dispatch,
 } from 'redux'
+import logger from 'redux-logger'
 import thunk from 'redux-thunk'
 
 import { containerReducer, IContainerState } from './container'
@@ -44,4 +45,7 @@ export const rootReducer: any = combineReducers<IState>({
   theme: themeReducer,
 })
 
-export const store = createStore(rootReducer, compose(applyMiddleware(thunk)))
+export const store = createStore(
+  rootReducer,
+  compose(applyMiddleware(thunk, logger))
+)
