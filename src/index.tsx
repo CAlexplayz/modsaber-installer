@@ -16,6 +16,8 @@ import './js/shortcuts'
 
 export interface IWindow extends Electron.BrowserWindow {
   custom: {
+    AUTO_UPDATE_JOB: string
+    BASE_URL: string
     ROLE: string
   }
 }
