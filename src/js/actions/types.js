@@ -8,8 +8,6 @@ export const SET_MODS_RAW         = 'SET_MODS_RAW'
 export const SET_MODS_LIST        = 'SET_MODS_LIST'
 export const SET_SELECTED_MOD     = 'SET_SELECTED_MOD'
 
-export const SET_GAME_VERSIONS    = 'SET_GAME_VERSIONS'
-
 export const SET_INSTALL          = 'SET_INSTALL'
 export const SET_INSTALL_PATH     = 'SET_INSTALL_PATH'
 export const SET_INSTALL_PLATFORM = 'SET_INSTALL_PLATFORM'
