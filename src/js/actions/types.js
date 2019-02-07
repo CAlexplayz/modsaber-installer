@@ -8,10 +8,6 @@ export const SET_MODS_RAW         = 'SET_MODS_RAW'
 export const SET_MODS_LIST        = 'SET_MODS_LIST'
 export const SET_SELECTED_MOD     = 'SET_SELECTED_MOD'
 
-export const SET_INSTALL          = 'SET_INSTALL'
-export const SET_INSTALL_PATH     = 'SET_INSTALL_PATH'
-export const SET_INSTALL_PLATFORM = 'SET_INSTALL_PLATFORM'
-
 export const SET_JOBS             = 'SET_JOB'
 export const ENQUEUE_JOB          = 'ENQUEUE_JOB'
 export const DEQUEUE_JOB          = 'DEQUEUE_JOB'
