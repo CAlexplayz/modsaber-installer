@@ -5,19 +5,23 @@ import { dialog, getCurrentWindow, ipcRenderer } from '../utils/electron'
 import { Status } from '../constants'
 import { IGameVersion } from '../models/modsaber'
 import { IState } from '../store'
-import { IGameVersionState, setGameVersions } from '../store/gameVersions'
+import {
+  IGameVersionState,
+  setSelectedGameVersion,
+} from '../store/gameVersions'
 import { IInstallState } from '../store/install'
 import { IJobsState } from '../store/jobs'
 import { setMods } from '../store/mods'
 import { IStatusState } from '../store/status'
 
 interface IProps {
-  gameVersions: IGameVersionState
+  gameVersions: IGameVersionState['values']
+  selected: IGameVersionState['selected']
   install: IInstallState
   jobs: IJobsState
   status: IStatusState
 
-  setGameVersions: typeof setGameVersions
+  setSelectedGameVersion: typeof setSelectedGameVersion
   setMods: typeof setMods
 }
 
@@ -69,17 +73,10 @@ class PathPicker extends Component<IProps> {
     )
   }
 
-  public switchVersion(gv: IGameVersion) {
-    const gameVersions = this.props.gameVersions.map(x => {
-      delete x.selected
-      if (x.manifest === gv.manifest) x.selected = true
+  public switchVersion(manifest: IGameVersion['manifest']) {
+    const idx = this.props.gameVersions.findIndex(x => x.manifest === manifest)
 
-      return x
-    })
-
-    const idx = gameVersions.findIndex(x => x.manifest === gv.manifest)
-
-    this.props.setGameVersions(gameVersions)
+    this.props.setSelectedGameVersion(idx)
     this.props.setMods(idx)
   }
 
@@ -117,7 +114,7 @@ class PathPicker extends Component<IProps> {
           style={{ marginLeft: '10px' }}
           onChange={e => {
             const target = e.target as HTMLOptionElement
-            this.switchVersion(JSON.parse(target.value) as IGameVersion)
+            this.switchVersion(target.value)
           }}
         >
           <select
@@ -128,7 +125,7 @@ class PathPicker extends Component<IProps> {
             }
           >
             {this.props.gameVersions.map((gv, i) => (
-              <option value={JSON.stringify(gv)} selected={gv.selected} key={i}>
+              <option value={gv.manifest} key={i}>
                 {gv.value}
               </option>
             ))}
@@ -140,16 +137,17 @@ class PathPicker extends Component<IProps> {
 }
 
 const mapStateToProps: (state: IState) => IProps = state => ({
-  gameVersions: state.gameVersions,
+  gameVersions: state.gameVersions.values,
   install: state.install,
   jobs: state.jobs,
+  selected: state.gameVersions.selected,
   status: state.status,
 
-  setGameVersions,
   setMods,
+  setSelectedGameVersion,
 })
 
 export default connect(
   mapStateToProps,
-  { setGameVersions, setMods }
+  { setSelectedGameVersion, setMods }
 )(PathPicker)

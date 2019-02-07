@@ -1,8 +1,7 @@
 export interface IGameVersion {
-  id?: string
+  id: string
   value: string
   manifest: string
-  selected: boolean
 }
 
 export interface IFiles {

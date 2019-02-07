@@ -16,6 +16,7 @@ import { IGameVersion, IMod } from './models/modsaber'
 
 interface IProps {
   selected: number | null
+  gvSelected: number
 
   dequeueJob: typeof dequeueJob
   enqueueJob: typeof enqueueJob
@@ -68,11 +69,9 @@ class Events extends Component<IProps> {
           return this.props.setStatus(Status.OFFLINE, statusText)
         }
 
-        const gvIdx = gameVersions.findIndex(x => x.selected)
-
         this.props.setStatus(Status.LOADED, StatusText.LOADED)
         this.props.setGameVersions(gameVersions)
-        this.props.setMods(gvIdx, mods)
+        this.props.setMods(this.props.gvSelected, mods)
 
         return undefined
       }
@@ -126,6 +125,7 @@ class Events extends Component<IProps> {
 }
 
 const mapStateToProps: (state: IState) => IProps = state => ({
+  gvSelected: state.gameVersions.selected,
   selected: state.mods.selected,
 
   dequeueJob,

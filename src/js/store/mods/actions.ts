@@ -53,7 +53,9 @@ export const setMods: (
   }
 
   const rawMods = raw || getState().mods.raw
-  const { gameVersions } = getState()
+  const {
+    gameVersions: { values: gameVersions },
+  } = getState()
   const gameVersion = gameVersions[index] || {}
 
   const mods = rawMods
