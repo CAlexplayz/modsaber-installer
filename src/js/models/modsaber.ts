@@ -2,7 +2,7 @@ export interface IGameVersion {
   id?: string
   value: string
   manifest: string
-  selected?: boolean
+  selected: boolean
 }
 
 export interface IFiles {
@@ -12,6 +12,7 @@ export interface IFiles {
 }
 
 export interface IMod {
+  index: number
   name: string
   version: string
   details: {
@@ -48,4 +49,10 @@ export interface IMod {
     requiredBy: string[]
     selected: boolean
   }
+}
+
+export interface ICategory {
+  name: string
+  weight: number
+  mods: IMod[]
 }
