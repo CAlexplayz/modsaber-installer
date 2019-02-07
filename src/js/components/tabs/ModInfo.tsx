@@ -2,9 +2,14 @@ import React from 'react'
 import Helmet from 'react-helmet'
 import { connect } from 'react-redux'
 
+import { IMod } from '../../models/modsaber'
 import MarkdownRenderer from '../Markdown'
 
-const ModInfo = ({ mod }) => (
+interface IProps {
+  mod: IMod
+}
+
+const ModInfo: React.FunctionComponent<IProps> = ({ mod }) => (
   <>
     <Helmet>
       <style>
