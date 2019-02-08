@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import Helmet from 'react-helmet'
 import { connect } from 'react-redux'
 import { ipcRenderer, shell } from '../../utils/electron'
 
@@ -14,6 +13,7 @@ import { IMod } from '../../models/modsaber'
 import { IState } from '../../store'
 import { IInstallState } from '../../store/install'
 import { IJobsState } from '../../store/jobs'
+import Styler from '../Styler'
 import Mods from './Mods'
 import Status from './Status'
 
@@ -31,6 +31,8 @@ interface IProps {
   setStatus: typeof setStatus
 }
 
+const mainStyles = '* { cursor: progress !important; }'
+
 const Main: React.FunctionComponent<IProps> = props => {
   if (props.jobs.length > 0 || props.status.type === StatusType.LOADING) {
     return (
@@ -43,9 +45,8 @@ const Main: React.FunctionComponent<IProps> = props => {
             : 'Working'}
           ...
         </Status>
-        <Helmet>
-          <style>{`* { cursor: progress !important; }`}</style>
-        </Helmet>
+
+        <Styler content={mainStyles} />
       </>
     )
   }

@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import Helmet from 'react-helmet'
 import { connect } from 'react-redux'
 import { ipcRenderer } from '../../utils/electron'
 import { openLog, uploadLog } from '../../utils/logs'
@@ -11,6 +10,7 @@ import { IStatusState } from '../../store/status'
 import { IThemeState, toggleTheme } from '../../store/theme'
 
 import { Status } from '../../constants'
+import Styler from '../Styler'
 
 interface IProps {
   install: IInstallState
@@ -21,6 +21,10 @@ interface IProps {
   toggleTheme: typeof toggleTheme
 }
 
+const toolsStyles = `div.box#main {
+  justify-content: initial; align-items: initial; padding: 15px; padding-top: 8px; overflow-y: scroll;
+}`
+
 class Tools extends Component<IProps> {
   public render() {
     const working = this.props.jobs.length > 0
@@ -28,13 +32,7 @@ class Tools extends Component<IProps> {
 
     return (
       <>
-        <Helmet>
-          <style>
-            {`div.box#main {
-              justify-content: initial; align-items: initial; padding: 15px; padding-top: 8px; overflow-y: scroll;
-            }`}
-          </style>
-        </Helmet>
+        <Styler content={toolsStyles} />
 
         <div className='content tools'>
           <h1>Theme</h1>
