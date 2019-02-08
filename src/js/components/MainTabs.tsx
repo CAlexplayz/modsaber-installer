@@ -1,15 +1,18 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
+import { IState } from '../store'
 import { setContainer } from '../store/container'
 import { setCurrentTab, setMaxTabs } from '../store/tabs'
 
-import { IState } from '../store'
 import Main from './main/Main'
+import Styler from './Styler'
 import Credits from './tabs/Credits'
 import Help from './tabs/Help'
 import ModInfo from './tabs/ModInfo'
 import Tools from './tabs/Tools'
+
+import { STYLE_OVERRIDE } from '../constants'
 
 interface IProps {
   currentTab: number
@@ -23,6 +26,7 @@ interface IProps {
 interface IPage {
   title: string
   component: React.ReactNode
+  overrideStyles?: boolean
 }
 
 class MainTabs extends Component<IProps> {
@@ -34,7 +38,7 @@ class MainTabs extends Component<IProps> {
 
     this.pages = [
       { title: 'Mods', component: <Main /> },
-      { title: 'Tools', component: <Tools /> },
+      { title: 'Tools', component: <Tools />, overrideStyles: true },
       { title: 'Help', component: <Help /> },
       { title: 'Credits', component: <Credits /> },
     ]
@@ -51,7 +55,10 @@ class MainTabs extends Component<IProps> {
     const pages =
       this.props.selected === null
         ? this.pages
-        : [...this.pages, { title: 'Mod Info', component: <ModInfo /> }]
+        : [
+            ...this.pages,
+            { title: 'Mod Info', component: <ModInfo />, overrideStyles: true },
+          ]
 
     const selected =
       this.props.currentTab > pages.length - 1 ? 0 : this.props.currentTab
@@ -85,6 +92,10 @@ class MainTabs extends Component<IProps> {
 
         <div ref={this.container} className='box' id='main'>
           {pages[selected].component}
+
+          {!pages[selected].overrideStyles ? null : (
+            <Styler content={STYLE_OVERRIDE} />
+          )}
         </div>
       </>
     )

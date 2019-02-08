@@ -6,9 +6,12 @@ import { ICategory, IMod } from '../../models/modsaber'
 import { IState } from '../../store'
 import { setSelectedMod, toggleMod } from '../../store/mods'
 
+import Styler from '../Styler'
+
+import { STYLE_OVERRIDE } from '../../constants'
+
 import '../../../css/scrollbar.css'
 import '../../../css/table.css'
-import Styler from '../Styler'
 
 interface IProps {
   mods: IMod[]
@@ -21,10 +24,6 @@ interface IProps {
 interface ILocalState {
   collapsed: string[]
 }
-
-const modsStyles = `div.box#main {
-  justify-content: initial; padding: 15px; padding-top: 8px; overflow-y: scroll;
-}`
 
 class Mods extends Component<IProps, ILocalState> {
   constructor(props: IProps) {
@@ -77,7 +76,7 @@ class Mods extends Component<IProps, ILocalState> {
 
     return (
       <>
-        <Styler content={modsStyles} />
+        <Styler content={STYLE_OVERRIDE} />
 
         <table className='table is-narrow is-fullwidth'>
           <thead>
