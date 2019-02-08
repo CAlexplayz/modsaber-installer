@@ -1,14 +1,13 @@
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 
-import { CATEGORY_DEFAULT } from '../../constants'
 import { ICategory, IMod } from '../../models/modsaber'
 import { IState } from '../../store'
 import { setSelectedMod, toggleMod } from '../../store/mods'
 
 import Styler from '../Styler'
 
-import { STYLE_OVERRIDE } from '../../constants'
+import { CATEGORY_DEFAULT, STYLE_OVERRIDE } from '../../constants'
 
 import '../../../css/scrollbar.css'
 import '../../../css/table.css'

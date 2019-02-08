@@ -3,6 +3,7 @@ import Konami from 'react-konami-code'
 import { connect } from 'react-redux'
 import { ipcRenderer } from './utils/electron'
 
+import { IGameVersion, IMod } from './models/modsaber'
 import { IState } from './store'
 import { setGameVersions } from './store/gameVersions'
 import { IInstallState, setInstall } from './store/install'
@@ -12,7 +13,6 @@ import { setStatus, setStatusText, setStatusType } from './store/status'
 import { loadTheme, toggleTheme } from './store/theme'
 
 import { Status, StatusText } from './constants'
-import { IGameVersion, IMod } from './models/modsaber'
 
 interface IProps {
   selected: number | null

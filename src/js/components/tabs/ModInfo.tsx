@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 
 import { IMod } from '../../models/modsaber'
 import { IState } from '../../store'
+
 import MarkdownRenderer from '../Markdown'
 
 interface IProps {

@@ -1,21 +1,22 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import { ipcRenderer, shell } from '../../utils/electron'
+
+import { IMod } from '../../models/modsaber'
+import { IState } from '../../store'
+import { IInstallState } from '../../store/install'
+import { IJobsState } from '../../store/jobs'
+import { IStatusState, setStatus } from '../../store/status'
+
+import Styler from '../Styler'
+import Mods from './Mods'
+import Status from './Status'
 
 import {
   AUTO_UPDATE_JOB,
   Status as StatusType,
   StatusText,
 } from '../../constants'
-import { IStatusState, setStatus } from '../../store/status'
-
-import { IMod } from '../../models/modsaber'
-import { IState } from '../../store'
-import { IInstallState } from '../../store/install'
-import { IJobsState } from '../../store/jobs'
-import Styler from '../Styler'
-import Mods from './Mods'
-import Status from './Status'
 
 const piracyLink = () => {
   const links = ['https://youtu.be/i8ju_10NkGY', 'https://youtu.be/C5kGCwJ25Yc']

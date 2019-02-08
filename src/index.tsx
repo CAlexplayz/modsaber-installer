@@ -1,7 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
+
 import App from './js/App'
+import ErrorBoundary from './js/ErrorBoundary'
 import Events from './js/Events'
 import Splash from './js/Splash'
 import { store } from './js/store/index'
@@ -36,4 +38,9 @@ const Root = () =>
     </Provider>
   )
 
-ReactDOM.render(<Root />, document.getElementById('root'))
+ReactDOM.render(
+  <ErrorBoundary>
+    <Root />
+  </ErrorBoundary>,
+  document.getElementById('root')
+)
