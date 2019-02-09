@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { FunctionComponent } from 'react'
 import Highlight from 'react-highlight'
 import ReactMarkdown from 'react-markdown'
 
@@ -9,9 +9,7 @@ interface IRendererProps {
   source: string
 }
 
-const MarkdownRenderer: React.FunctionComponent<IRendererProps> = ({
-  source,
-}) => (
+const MarkdownRenderer: FunctionComponent<IRendererProps> = ({ source }) => (
   <ReactMarkdown
     source={source}
     renderers={{
@@ -28,7 +26,7 @@ interface IKeyboardProps {
   children: string[]
 }
 
-const Keyboard: React.FunctionComponent<IKeyboardProps> = ({ children }) => (
+const Keyboard: FunctionComponent<IKeyboardProps> = ({ children }) => (
   <kbd>{children[0]}</kbd>
 )
 
@@ -37,10 +35,7 @@ interface ICodeblockProps {
   value: string
 }
 
-const CodeBlock: React.FunctionComponent<ICodeblockProps> = ({
-  language,
-  value,
-}) => {
+const CodeBlock: FunctionComponent<ICodeblockProps> = ({ language, value }) => {
   if (!language) return <pre>{value}</pre>
 
   return <Highlight className={`language-${language}`}>{value}</Highlight>
@@ -50,18 +45,17 @@ interface IInlineCodeProps {
   children: React.ReactNode
 }
 
-const InlineCode: React.FunctionComponent<IInlineCodeProps> = ({
-  children,
-}) => <code className='tag is-code'>{children}</code>
+const InlineCode: FunctionComponent<IInlineCodeProps> = ({ children }) => (
+  <code className='tag is-code'>{children}</code>
+)
 
 interface ILinkProps {
   children: string[]
   href: string
 }
 
-const Link: React.FunctionComponent<ILinkProps> = ({
-  children: [text],
-  href,
-}) => <ExtLink href={href}>{text}</ExtLink>
+const Link: FunctionComponent<ILinkProps> = ({ children: [text], href }) => (
+  <ExtLink href={href}>{text}</ExtLink>
+)
 
 export default MarkdownRenderer

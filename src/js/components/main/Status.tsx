@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { FunctionComponent } from 'react'
 
 interface IProps {
   icon?: string
@@ -6,7 +6,7 @@ interface IProps {
   spin?: boolean
 }
 
-const Status: React.FunctionComponent<IProps> = props => (
+const Status: FunctionComponent<IProps> = props => (
   <>
     <i
       className={`${props.icon || 'fas fa-cog'} fa-2x${

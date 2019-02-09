@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { FunctionComponent } from 'react'
 import { connect } from 'react-redux'
 import { ipcRenderer, shell } from '../../utils/electron'
 
@@ -34,7 +34,7 @@ interface IProps {
 
 const mainStyles = '* { cursor: progress !important; }'
 
-const Main: React.FunctionComponent<IProps> = props => {
+const Main: FunctionComponent<IProps> = props => {
   if (props.jobs.length > 0 || props.status.type === StatusType.LOADING) {
     return (
       <>

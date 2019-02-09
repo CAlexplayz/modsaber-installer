@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { FunctionComponent } from 'react'
 import { connect } from 'react-redux'
 
 import { IMod } from '../../models/modsaber'
@@ -9,7 +9,7 @@ import MarkdownRenderer from '../Markdown'
 interface IProps {
   mod: IMod
 }
-const ModInfo: React.FunctionComponent<IProps> = ({ mod }) => (
+const ModInfo: FunctionComponent<IProps> = ({ mod }) => (
   <>
     <div className='content'>
       <h1>{mod.details.title}</h1>
