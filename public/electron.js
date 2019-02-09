@@ -79,13 +79,17 @@ app.on('ready', () => {
       })
   })
 
-  const width = 820
-  const height = 590
+  const width = 1080
+  const height = 755
+
+  const minWidth = 820
+  const minHeight = 600
+
   window = new BrowserWindow({
     width: width,
     height: isDev ? height + 20 : height,
-    minWidth: width,
-    minHeight: isDev ? height + 20 : height,
+    minWidth: minWidth,
+    minHeight: isDev ? minHeight + 20 : minHeight,
     show: false,
     icon: path.join(__dirname, 'icon.png'),
   })
